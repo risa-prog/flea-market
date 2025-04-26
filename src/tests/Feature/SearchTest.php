@@ -44,11 +44,11 @@ class SearchTest extends TestCase
         $response->assertStatus(200)->assertSee('aaa','bbb');
 
         $keyword = [
-            'keyword' => 'a'
-        ];
+             'keyword' => 'a'
+         ];
         $response = $this->get('/search/item',$keyword);
         
-        $response->assertStatus(200)->assertSee('aaa')->dd();
+        $response->assertStatus(200)->assertSee('aaa')->assertDontSee('bbb');
 
     }
 }

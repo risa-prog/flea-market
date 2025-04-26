@@ -45,8 +45,8 @@
                     <div class="purchase-form__order-select">
                         <select class="purchase-form__order-selectbox" name="payment_method" id="select" onChange="myfunc()">
                             <option value="" disabled selected>選択してください</option>
-                            <option value="1">コンビニ払い</option>
-                            <option value="2">カード支払い</option>
+                            <option value="1"><span id="option">コンビニ払い</span></option>
+                            <option value="2"><span id="option">カード支払い</span></option>
                         </select>
                     </div>
                     @error('payment_method')
@@ -97,13 +97,24 @@
 </form>
 <script>
     function myfunc(){
-        let payment = document.getElementId('payment');
+        let payment = document.getElementById('payment');
 
         let new_element = document.createElement('span');
 
-        var value = document.getElementById("myselectbox").value;
-          payment.insertAdjacentHTML('afterbegin','<span>value</span>');  
+        new_element.textContent = document.getElementById('select').value;
+        // console.log(new_element);
+
+        // if(new_element == "<span>1</span>"){
+        //     payment.insertAdjacentHTML('afterbegin','<span>コンビニ払い</span>');
+        // }else if(new_element == "<span>2</span>") {
+        //     payment.insertAdjacentHTML('afterbegin','<span>カード払い</span>');
+        // }
+
+        // var value = document.getElementById('select').value;
+        // // console.log(value);
+        // payment.insertAdjacentHTML('afterbegin','<span>value</span>');  
         
-                            }
+        payment.insertAdjacentHTML('afterbegin',new_element.outerHTML)
+    }
 </script>
 @endsection

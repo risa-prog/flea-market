@@ -24,6 +24,7 @@ class SellTest extends TestCase
         $response->assertStatus(200);
 
         $file = new UploadedFile(storage_path("app/public/1735615757575.jpg"), "1735615757575.jpg");
+    
         $itemData = [
             'category_id'=>'1',
             'item_name' => 'テストitem',
@@ -33,9 +34,7 @@ class SellTest extends TestCase
             'condition'=>'2',
         ];
     
-        
         $response = $this->post('/sell', $itemData);
-        // $response = $this->post('/sell', $itemData)->dump();
         $response->assertStatus(200);
 
          $this->assertDatabaseHas(Item::class, [
