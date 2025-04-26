@@ -22,8 +22,9 @@
 
 ## 開発環境
 
-•home画面：http://localhost/<br/>
-•会員登録：http://localhost/register</br>
+•home画面:http://localhost/<br/>
+•会員登録:http://localhost/register</br>
+•phpMyAdmin:http://localhost:8080/
 
 ## ER図
 
