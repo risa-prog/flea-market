@@ -1,0 +1,107 @@
+.mypage {
+   padding: 64px 32px ;
+}
+
+.mypage__user {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.mypage__user-name {
+    font-weight: bold;
+    font-size:36px;
+}
+
+.mypage__user-image {
+    grid-column: 1;
+    text-align: right;
+    width: 80%;
+}
+
+.mypage__user-image-inner {
+    width:60%;
+}
+
+.mypage__user-name{
+    grid-column: 2;
+    text-align: center;
+}
+
+.mypage__user-link{
+    grid-column: 3;
+    text-align: center;
+}
+
+.mypage__user-link-edit{
+    text-decoration: none;
+    color: #ff5455;
+    border: 1px solid #ff5455;
+    border-radius: 5px;
+    padding: 8px 16px;
+    display: inline-block;
+    font-weight: bold;
+}
+
+.mypage__link{
+    display: flex;
+    border-bottom:1px solid #5f5f5f;
+}
+
+.mypage__link-exhibit{
+    padding-right: 10px;
+    margin-bottom: 5px;
+}
+
+.mypage__link-exhibit-access{
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+    padding-left: 10px;
+}
+
+.mypage__link-exhibit-access:active {
+    color: #ff5455;
+}
+
+.mypage__link-purchase {
+    margin-bottom: 5px;
+}
+
+.mypage__link-purchase-access{
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+    padding-left: 10px;
+}
+
+.mypage__item{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.mypage__item-group{
+    width:25%;
+    box-sizing: border-box;
+    padding: 40px; 
+}
+
+.mypage__item-image{
+    width:100%;
+}
+
+.mypage__item-image-inner{
+    width: 100%;
+}
+
+.mypage__item-name {
+    margin-top: 0px;
+}
+
+@media screen and (max-width:1230px) {
+    .mypage__item-group{
+        padding: 24px;
+    }
+}
+

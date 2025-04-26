@@ -1,0 +1,19 @@
+.header {
+    background-color: #000000;
+}
+
+.header__inner {
+    display: grid;
+    grid-template-columns: 2fr 4fr 2fr;
+    align-items: center; 
+}
+
+.header__logo {
+    padding:18px; 
+    grid-column: 1;
+}
+
+.header__img {
+    width: 100%;
+}
+

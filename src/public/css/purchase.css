@@ -1,0 +1,151 @@
+.purchase-form {
+    width:80%;
+    margin:50px auto;
+}
+
+.purchase-form__item {
+    display: grid;
+    grid-template-columns:2fr 1fr ;
+    align-items: center;
+}
+
+.purchase-form__item-ttl {
+    font-size:24px;
+}
+
+.purchase-form__item-price {
+    font-size:20px;
+}
+
+.purchase-form__item-content {
+    grid-column: 1;
+    display: flex;
+    margin-bottom: 20px; 
+    border-bottom: 1px solid #606060;
+    width: 80%;
+}
+
+.purchase-form__item-image {
+    width: 30%;
+}
+
+img {
+    width: 100%;
+}
+
+.purchase-form__item-inner {
+    padding-left: 24px;
+}
+
+.purchase-form__table {
+    grid-column: 2;
+}
+
+.purchase-form__table-inner {
+    width: 100%;
+}
+
+.purchase-form__row {
+    border: 1px solid #606060;  
+}
+
+.purchase-form__heading{
+    width:60%;
+    padding:24px; 
+}
+
+.purchase-form__data {
+    width: 40%;
+    padding: 24px; 
+}
+
+.purchase-form__order {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+
+.purchase-form__order-group {
+    border-bottom: 1px solid #606060;
+    padding-bottom: 20px;
+}
+
+.purchase-form__order-content {
+    grid-column: 1;
+    width:80%;
+}
+
+.purchase-form__order-label {
+    font-size:18px;
+    margin-bottom: 8px;
+    display: inline-block;
+}
+
+.purchase-form__order-selectbox {
+    padding: 3px;
+}
+
+.purchase-form__button {
+    grid-column: 2;
+}
+
+.purchase-form__submit {
+    border: none;
+    background-color: #FF5455;
+    color:#fff;
+    width: 100%;
+    padding: 8px;
+    cursor: pointer;
+   border-radius: 3px;
+}
+
+.purchase-form__shipping {
+    padding-top: 20px;
+}
+
+.purchase-form__shipping-flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.purchase-form__link a {
+    text-decoration: none;
+}
+
+.purchase-form__shipping-label {
+    font-size:18px;
+    margin-bottom: 8px;
+}
+
+.purchase-form__shipping-address:last-child {
+    display: flex;
+}
+
+.purchase-form__shipping-address input {
+    border:none; 
+    font-size:16px;
+}
+
+
+@media screen and (max-width: 1200px) {
+    .purchase-form__item-ttl {
+            font-size: 20px;
+        }
+
+    .purchase-form__item-price {
+        font-size: 18px;
+    }
+
+    .purchase-form__heading,
+        .purchase-form__data {
+            padding: 5px;
+        }
+}
+
+
+
+
+
+
+.purchase-form__error-message{
+    color:red;
+}

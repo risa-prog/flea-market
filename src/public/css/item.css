@@ -1,0 +1,184 @@
+.item {
+    padding:32px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+}
+
+.item__image {
+    grid-column: 1;
+    width: 80%;
+}
+
+.item__image-inner {
+    width: 100%;
+}
+
+.item__content {
+    grid-column: 2;
+    width: 60%;
+}
+
+.item__content-detail {
+    margin-bottom: 50px;
+}
+
+.item__content-heading {
+    font-size:24px;
+}
+
+.item__content-price {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.item__content-price-span {
+    font-size: 14px;
+}
+
+.item__content-icons {
+    display:flex;cd
+}
+
+.item__content-icon:first-child {
+    margin:0 24px 0 16px;
+}
+
+.fa-regular {
+    width: 100%;
+}
+
+.fa-thumbs-up: {
+    background-color: #ff0000;
+}
+
+.item__content-count {
+    text-align: center;
+    margin-top: 5px;
+}
+
+.item__content-submit {
+    color:#fff;
+    background-color:#ff0000 ;
+    display: block;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+    padding:5px 16px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.item__description {
+    margin-bottom:50px;
+}
+
+.item__description-heading,.item__information-heading {
+    font-size: 20px;
+}
+
+.item__information {
+    margin-bottom: 50px;
+}
+
+.item__table-heading {
+    width:30%;
+    padding:8px 0;
+}
+
+.item__table-data {
+    width:70%;
+    text-align: center;
+    padding:8px 0;
+}
+
+.item__table-span {
+    background-color:#d9d9d9 ;
+    border-radius: 10px;
+    display: inline-block;
+    padding:0 12px;
+    margin: 5px;
+}
+
+.item__table-wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.item__comment {
+    margin-bottom:50px;
+}
+
+.item__comment-content {
+    margin-bottom:80px;
+}
+
+.item__comment-heading {
+    font-size: 20px;
+}
+
+.item__comment-inner {
+    display: flex;
+    align-items: center;
+}
+
+.item__comment-image {
+    width: 30%;
+    padding:0 8px;
+}
+
+.item__comment-image-inner {
+    width:100%;
+}
+
+.item__comment-user {
+    padding:0 8px;
+    font-weight: bold;
+}
+
+.item__comment-text {
+    padding:8px 16px;
+    background-color: #d9d9d9;
+    border-radius: 3px;
+    margin-bottom: 40px;
+}
+
+.comment-form__text {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.comment-form__textarea {
+    padding: 8px 16px;
+    width:100%;
+    height:150px;
+    outline: none;
+    font-size:20px;
+}
+
+.comment-form__button {
+    margin-top: 32px;
+}
+
+.comment-form__submit {
+    color:#fff;
+    background-color: #ff0000;
+    padding: 5px 16px;
+    cursor: pointer;
+    border-radius: 3px;
+    border: none;
+    width:100%;
+    text-align: center;
+    font-size:15px;
+}
+
+.comment-form__error-message {
+    color:red;
+}
+
+@media screen and (max-width: 1200px) {
+    .item__content {
+        width: 100%;
+    }
+}
+
+
