@@ -136,6 +136,8 @@ class ItemController extends Controller
         $previousUrl = app('url')->previous();
         return redirect()->to($previousUrl.'?'. http_build_query(['id'=>$order['item_id']]))->withInput(); 
 
+        // return view('stripe');
+
     }
 
     public function create(ExhibitionRequest $request){

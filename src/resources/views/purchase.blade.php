@@ -33,7 +33,7 @@
                     </tr>
                     <tr class="purchase-form__row">
                         <th class="purchase-form__heading">支払い方法</th>
-                        <td class="purchase-form__data" id="payment"></td>
+                        <td class="purchase-form__data"><span id="payment"></span></td>
                     </tr>
                 </table>
             </div>
@@ -43,10 +43,10 @@
                 <div class="purchase-form__order-group">
                     <label class="purchase-form__order-label">支払い方法</label>
                     <div class="purchase-form__order-select">
-                        <select class="purchase-form__order-selectbox" name="payment_method" id="select" onChange="myfunc()">
+                        <select class="purchase-form__order-selectbox" name="payment_method" id="select">
                             <option value="" disabled selected>選択してください</option>
-                            <option value="1"><span id="option">コンビニ払い</span></option>
-                            <option value="2"><span id="option">カード支払い</span></option>
+                            <option value="コンビニ払い"><span id="option">コンビニ払い</span></option>
+                            <option value="カード払い"><span id="option">カード支払い</span></option>
                         </select>
                     </div>
                     @error('payment_method')
@@ -96,25 +96,10 @@
     </div>
 </form>
 <script>
-    function myfunc(){
-        let payment = document.getElementById('payment');
-
-        let new_element = document.createElement('span');
-
-        new_element.textContent = document.getElementById('select').value;
-        // console.log(new_element);
-
-        // if(new_element == "<span>1</span>"){
-        //     payment.insertAdjacentHTML('afterbegin','<span>コンビニ払い</span>');
-        // }else if(new_element == "<span>2</span>") {
-        //     payment.insertAdjacentHTML('afterbegin','<span>カード払い</span>');
-        // }
-
-        // var value = document.getElementById('select').value;
-        // // console.log(value);
-        // payment.insertAdjacentHTML('afterbegin','<span>value</span>');  
-        
-        payment.insertAdjacentHTML('afterbegin',new_element.outerHTML)
-    }
+    var select = document.getElementById('select');
+    var payment = document.getElementById('payment');
+    select.addEventListener('change',function(){
+        payment.textContent = select.value;
+    });
 </script>
 @endsection
