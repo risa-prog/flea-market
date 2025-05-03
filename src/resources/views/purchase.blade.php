@@ -45,8 +45,8 @@
                     <div class="purchase-form__order-select">
                         <select class="purchase-form__order-selectbox" name="payment_method" id="select">
                             <option value="" disabled selected>選択してください</option>
-                            <option value="コンビニ払い"><span id="option">コンビニ払い</span></option>
-                            <option value="カード払い"><span id="option">カード支払い</span></option>
+                            <option value="1"><span id="option1">コンビニ払い</span></option>
+                            <option value="2"><span id="option2">カード支払い</span></option>
                         </select>
                     </div>
                     @error('payment_method')
@@ -98,8 +98,15 @@
 <script>
     var select = document.getElementById('select');
     var payment = document.getElementById('payment');
+    var option1 = document.getElementById('option1');
+    var option2 = document.getElementById('option2');
+
     select.addEventListener('change',function(){
-        payment.textContent = select.value;
+        if(select.value == '1'){
+            payment.textContent = option1.textContent;
+        }else{
+            payment.textContent = option2.textContent;
+        } 
     });
 </script>
 @endsection
