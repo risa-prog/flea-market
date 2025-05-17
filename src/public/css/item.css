@@ -47,8 +47,8 @@
     width: 100%;
 }
 
-.fa-thumbs-up: {
-    background-color: #ff0000;
+.fa-like {
+    color:red;
 }
 
 .item__content-count {

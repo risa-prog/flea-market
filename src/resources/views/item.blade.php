@@ -19,7 +19,7 @@
                 <div class="item__content-icon">
                     @if($item->is_like())
                     <a href="/item/:item/unlike?item_id={{$item->id}}" class="item_unlike">
-                        <i class="fa-sharp fa-regular fa-thumbs-up fa-2x"></i>
+                        <i class="fa-sharp fa-regular fa-thumbs-up fa-2x fa-like"></i>
                     </a>
                     @else
                     <a href="/item/:item/like?item_id={{$item->id}}" class="item_like">
@@ -115,6 +115,17 @@
         </div>
     </div>
 </div>
-<!-- git -->
+<script>
+    var like = document.querySelector('.item_like');
+    // console.log(like);
+    // var unlike = document.querySelector('.item_unlike');
+    var thumbs = document.querySelector('.fa-thumbs-up');
+    // console.log(thumbs);
+    if(like != null){
+        like.addEventListener('click',function(){
+        thumbs.style.color = 'red';
+        });
+    }
+</script>
 @endsection
 
