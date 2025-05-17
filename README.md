@@ -19,6 +19,7 @@
 •PHP 7.4<br/>
 •Laravel 8.83<br/>
 •MySQL 8.0<br/>
+.JavaScript</br>
 
 ## 開発環境
 
