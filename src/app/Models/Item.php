@@ -50,6 +50,14 @@ class Item extends Model
             return false;
         }
     }
+
+    public function transaction() {
+        return $this->hasOne('App\Models\Transaction');
+    }
+
+    public function transactionComments() {
+        return $this->hasMany('App\Models\TransactionComment');
+    }
 }
 
             

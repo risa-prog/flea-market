@@ -26,7 +26,7 @@ class ItemsTableSeeder extends Seeder
         DB::table('items')->insert($pram);
 
         $pram=[
-            'user_id'=>'2',
+            'user_id'=>'1',
             'item_name'=>'HDD',
             'item_image'=>'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/HDD+Hard+Disk.jpg',
             'price'=>'5000',
@@ -37,7 +37,7 @@ class ItemsTableSeeder extends Seeder
         DB::table('items')->insert($pram);
 
         $pram=[
-            'user_id'=>'2',
+            'user_id'=>'1',
             'item_name'=>'玉ねぎ束',
             'item_image'=>'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/iLoveIMG+d.jpg',
             'price'=>'300',
@@ -48,7 +48,7 @@ class ItemsTableSeeder extends Seeder
         DB::table('items')->insert($pram);
 
         $pram=[
-            'user_id'=>'3',
+            'user_id'=>'1',
             'item_name'=>'革靴',
             'item_image'=>'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Leather+Shoes+Product+Photo.jpg',
             'price'=>'4000',
@@ -81,7 +81,7 @@ class ItemsTableSeeder extends Seeder
         DB::table('items')->insert($pram);
 
         $pram=[
-            'user_id'=>'1',
+            'user_id'=>'2',
             'item_name'=>'ショルダーバッグ',
             'item_image'=>'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Purse+fashion+pocket.jpg',
             'price'=>'3500',
@@ -92,7 +92,7 @@ class ItemsTableSeeder extends Seeder
         DB::table('items')->insert($pram);
 
         $pram=[
-            'user_id'=>'3',
+            'user_id'=>'2',
             'item_name'=>'タンブラー',
             'item_image'=>'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Tumbler+souvenir.jpg',
             'price'=>'500',
@@ -103,7 +103,7 @@ class ItemsTableSeeder extends Seeder
         DB::table('items')->insert($pram);
 
         $pram=[
-            'user_id'=>'1',
+            'user_id'=>'2',
             'item_name'=>'コーヒーミル',
             'item_image'=>'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Waitress+with+Coffee+Grinder.jpg',
             'price'=>'4000',

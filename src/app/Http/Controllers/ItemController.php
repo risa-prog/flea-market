@@ -4,15 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Item;
-use App\Models\User;
 use App\Models\Member;
 use App\Models\Order;
 use App\Models\Comment;
-use App\Models\Like;
 use App\Models\Category;
-use App\Models\Profile;
 use App\Http\Requests\CommentRequest;
-use App\Http\Requests\AddressRequest;
 use App\Http\Requests\PurchaseRequest;
 use App\Http\Requests\ExhibitionRequest;
 use App\Http\Requests\Shipping_AddressRequest;
@@ -24,7 +20,7 @@ class ItemController extends Controller
         $query = Item::query();
 
         if(!empty($request->keyword)){
-            $items=$query->where(function ($q) use ($request){
+            $items = $query->where(function ($q) use ($request){
                 $q->where('item_name','like','%'.$request->keyword.'%');
             })->get();
         }else{
@@ -33,8 +29,8 @@ class ItemController extends Controller
         return view('index',compact('items'));
     }
 
-    public function index(Request $request){
-        if(empty($request->tab)){
+    public function index(Request $request) {
+        if(empty($request->tab)) {
             $items=Item::where('user_id','!=',Auth::id())->get();
          }elseif($request->tab === "mylist"){
              $items=Item::with('likes')->whereHas('likes',function ($query) {
@@ -72,10 +68,10 @@ class ItemController extends Controller
     }
 
     public function purchase(Request $request){
-        $item=Item::find($request->id);
-        $user=Auth::user();
-        $member=Member::where('user_id',$user->id)->first();
-        $profile=Profile::where('user_id',$user->id)->first();
+        $item = Item::find($request->id);
+        $user = Auth::user();
+        $member = Member::where('user_id',$user->id)->first();
+        $profile = $member->profile_image;
 
         if(empty($member)){
             return view('profile',compact('member','profile'));
@@ -86,22 +82,22 @@ class ItemController extends Controller
     }
 
     public function address(Request $request){
-        $item_id=$request->id;
-        $user=Auth::user();
-        $member=$user->member->only(['post_code','address','building']);
+        $item_id = $request->id;
+        $user = Auth::user();
+        $member = $user->member->only(['post_code','address','building']);
         
         return view('address',compact('member','item_id'));
     }
 
     public function comment(CommentRequest $request){
-        $user=Auth::user();
-        $member=Member::where('user_id',$user->id)->first();
-        $profile=Profile::where('user_id',$user->id)->first();
+        $user = Auth::user();
+        $member = Member::where('user_id',$user->id)->first();
+        $profile = $member->profile_image;
 
         if(empty($member)){
             return view('profile',compact('member','profile'));
         }else{
-            $comment=$request->all();
+            $comment = $request->all();
             unset($comment['_token']);
             Comment::create($comment);
 
@@ -110,20 +106,20 @@ class ItemController extends Controller
         }
     }
     
-    public function edit(Shipping_AddressRequest $request){
-        $member=$request->only(['post_code','address','building']);
-        $item_id=$request->item_id;
-        $item=Item::find($item_id);
+    public function edit(Shipping_AddressRequest $request) {
+        $member = $request->only(['post_code','address','building']);
+        $item_id = $request->item_id;
+        $item = Item::find($item_id);
         return view('purchase',compact('member','item'));
     }
 
     public function order(PurchaseRequest $request){
-        $order=$request->all();
+        $order = $request->all();
         unset($order['_token']);
-        $user_id=Auth::id();
-        $order=array_merge($order,array('user_id'=>"$user_id"));
+        $user_id = Auth::id();
+        $order = array_merge($order,array('user_id'=>"$user_id"));
 
-        $item=Item::find($request->item_id);
+        $item = Item::find($request->item_id);
 
         if($user_id === $item->user_id){
             $request->session()->flash('message','その商品は購入できません');
@@ -135,8 +131,6 @@ class ItemController extends Controller
 
         $previousUrl = app('url')->previous();
         return redirect()->to($previousUrl.'?'. http_build_query(['id'=>$order['item_id']]))->withInput(); 
-
-        // return view('stripe');
 
     }
 

@@ -20,6 +20,7 @@ class CreateMembersTable extends Migration
             $table->string('post_code',255);
             $table->string('address',255);
             $table->string('building',255);
+            $table->text('profile_image')->nullable();
             $table->timestamps();
         });
     }

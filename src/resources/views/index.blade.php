@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="home__item">
-            @if(!empty($items))
+        @if(!empty($items))
             @foreach($items as $item)
             <div class="home__item-content">
                 <div class="home__item-image">

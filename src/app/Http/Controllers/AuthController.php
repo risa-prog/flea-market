@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\LoginRequest;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Routing\Pipeline;
 use Laravel\Fortify\Contracts\LoginResponse;
 use Laravel\Fortify\Features;
@@ -14,10 +18,34 @@ use Laravel\Fortify\Actions\RedirectIfTwoFactorAuthenticatable;
 use Laravel\Fortify\Actions\AttemptToAuthenticate;
 use Laravel\Fortify\Actions\PrepareAuthenticatedSession;
 
-class LoginController extends Controller
+class AuthController extends Controller
 {
-    public function store(LoginRequest $request){
-       return $this->loginPipeline($request)->then(function ($request) {
+    public function showRegisterForm()
+    {
+        return view('auth.register');
+    }
+
+    public function register(RegisterRequest $request)
+    {
+        $user = User::create([
+            'name' => $request->name,
+            'email' => strtolower($request->email),
+            'password' => Hash::make($request->password),
+        ]);
+
+        Auth::login($user);
+
+        return redirect('/mypage/profile');
+    }
+
+    public function showLoginForm()
+    {
+        return view('auth.login');
+    }
+
+    public function login(LoginRequest $request)
+    {
+        return $this->loginPipeline($request)->then(function ($request) {
             return app(LoginResponse::class);
         });
     }
@@ -43,5 +71,14 @@ class LoginController extends Controller
             AttemptToAuthenticate::class,
             PrepareAuthenticatedSession::class,
         ]));
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate(); // セッション破棄
+        $request->session()->regenerateToken(); // CSRFトークン再生成
+
+        return redirect('/');
     }
 }

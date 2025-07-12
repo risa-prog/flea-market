@@ -12,6 +12,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $guard = 'web';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -60,5 +62,9 @@ class User extends Authenticatable
 
     public function profile(){
         return $this->hasOne('App\Models\Profile');
+    }
+
+    public function transactionComments() {
+        return $this->hasMany('App\Models\TransactionComment');
     }
 }

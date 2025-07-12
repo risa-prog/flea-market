@@ -1,0 +1,44 @@
+.trading-chat {
+    display: flex;
+}
+
+.trading-chat__side {
+    width:20%;
+}
+
+.trading-chat__content {
+    width:80%;
+}
+
+.trading-chat__top {
+    display:flex;
+    align-items: center;
+    justify-content: space-between;   
+}
+
+.trading-chat__content-item {
+    display: flex;
+}
+
+.trading-chat__item-image {
+    width: 30%;
+    margin-right: 50px;
+}
+
+img {
+    width: 100%;
+}
+
+
+
+
+
+@media screen and (max-width:1200px) {
+    .trading-chat__side {
+            width: 30%;
+    }
+    
+    .trading-chat__content {
+        width: 70%;
+    }
+}

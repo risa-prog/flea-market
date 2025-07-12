@@ -22,7 +22,7 @@
     </div>
     @endif
     <div class="header__nav-mypage">
-        <a class="header__nav-mypage-link" href="/mypage">マイページ</a>
+        <a class="header__nav-mypage-link" href="/mypage?tab=sell">マイページ</a>
     </div>
     <div class="header__nav-sell">
         <a class="header__nav-sell-link" href="/sell">出品</a>
