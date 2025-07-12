@@ -29,8 +29,17 @@ class TradingChatController extends Controller
             $client = User::find($client_id);
         }
         
-        $my_transaction_comments = TransactionComment::where('user_id',$user->id)->where('transaction_id',$item->transaction->id)->get();
+        $my_transaction_comments = TransactionComment::where('sender_id',$user->id)->where('transaction_id',$item->transaction->id)->get();
 
+        // dd($item->transaction->transactionComments);
+        if($item->transaction->transactionComments->isNotEmpty()) {
+            foreach($item->transaction->transactionComments as $transaction_comment) {
+                if($transaction_comment->is_read === 1 && Auth::id() === $transaction_comment->receiver_id) {
+                    $transaction_comment->update(['is_read' => 2]);
+                }
+            }
+        }
+        
         return view('trading_chat',compact('item','transactions','client', 'my_transaction_comments'));
     }
 

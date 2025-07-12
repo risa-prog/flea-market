@@ -17,4 +17,8 @@ class Transaction extends Model
     public function item() {
         return $this->belongsTo('App\Models\Item');
     }
+
+    public function transactionComments() {
+        return $this->hasMany('App\Models\TransactionComment');
+    }
 }

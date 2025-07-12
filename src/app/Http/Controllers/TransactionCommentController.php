@@ -2,27 +2,42 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\TransactionComment;
 use App\Http\Requests\TransactionCommentRequest;
 use App\Http\Requests\TransactionCommentUpdateRequest;
+use App\Models\Transaction;
 
 class TransactionCommentController extends Controller
 {
     public function create(TransactionCommentRequest $request) {
-        $user = Auth::user();
-        $transaction_comment = $request->only(['content', 'transaction_id']);
-        $transaction_comment = array_merge($transaction_comment, array('user_id' => $user->id));
+        $user_id = Auth::id();
+        $transaction = Transaction::find($request->transaction_id);
+        // $transaction_comment = $request->only(['content', 'transaction_id']);
+        // $transaction_comment = array_merge($transaction_comment, array('user_id' => $user->id));
+
+        if ($user_id === $transaction->buyer_id) {
+            $receiver_id = $transaction->seller_id;
+        } elseif ($user_id === $transaction->seller_id) {
+            $receiver_id = $transaction->buyer_id;
+        }
 
         if($request->image !== null){
             $image_name = $request->image->getClientOriginalName();
             // 画像の保存
             $request->image->storeAs('', $image_name, 'public');
-            $transaction_comment['image'] = $image_name;
+        }else {
+            $image_name = null;
         }
         
-        TransactionComment::create($transaction_comment);
+        TransactionComment::create([
+            'transaction_id' => $transaction->id,
+            'sender_id' => $user_id,
+            'receiver_id' => $receiver_id,
+            'content' => $request->content,
+            'image' => $image_name,
+            'is_read' => 1,
+        ]);
         
         return redirect()->route('trading.chat', ['item_id' => $request->item_id]);
     }
@@ -39,6 +54,11 @@ class TransactionCommentController extends Controller
             $content = reset($content2);
             $transaction_comment = TransactionComment::find($id);
             $transaction_comment->update(['content' => $content]);
+
+            $transaction_comment = TransactionComment::find($id);
+            if($transaction_comment->is_read === 2) {
+                $transaction_comment->update(['is_read' => 1]);
+            }
         }
 
         return redirect()->route('trading.chat', ['item_id' => $request->item_id]);

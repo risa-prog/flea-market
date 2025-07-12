@@ -8,7 +8,7 @@ use App\Models\Member;
 use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\AddressRequest;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Transaction;
+use App\Models\TransactionComment;
 
 class MypageController extends Controller
 {
@@ -34,8 +34,18 @@ class MypageController extends Controller
                         })->where('status', 1);
                 })->get();
             }
-            
-        return view('mypage',compact('member','items'));
+
+        $unreadComments = TransactionComment::where('is_read', 1)
+            ->whereHas('transaction', function ($query) use ($user) {
+                $query->where(function ($q) use ($user) {
+                    $q->where('buyer_id', $user->id)
+                        ->orWhere('seller_id', $user->id);
+                });
+            })
+            ->where('sender_id', '!=', $user->id) // 自分以外が送ったもの
+            ->get();
+
+        return view('mypage',compact('member','items','unreadComments'));
     }
 
     public function profile() {

@@ -9,5 +9,9 @@ class TransactionComment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['transaction_id','user_id','content','image',];
+    protected $fillable = ['transaction_id','sender_id','receiver_id','is_read','content','image',];
+
+    public function transaction() {
+        return $this->belongsTo('App\Models\Transaction');
+    }
 }

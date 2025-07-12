@@ -24,15 +24,15 @@ class UsersTableSeeder extends Seeder
 
         $pram=[
             'name' => '山田花子',
-            'email' =>'hanako@gmail.com',
-            'password' => bcrypt('secret'),
+            'email' =>'hanakoymd@gmail.com',
+            'password' => Hash::make('hanako875'),
         ];
         DB::table('users')->insert($pram);
 
         $pram=[
             'name' => '山田次郎',
             'email' =>'yamadaj@gmail.com',
-            'password' => bcrypt('secret'),
+            'password' => Hash::make('jiro8888'),
         ];
         DB::table('users')->insert($pram);
 

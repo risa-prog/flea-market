@@ -29,7 +29,15 @@ img {
     width: 100%;
 }
 
+.trading-chat__comment-myself {
+    display: flex;
+    /* justify-content: flex-end; */
+    align-items: center;
+}
 
+.trading-chat__comment-myself-image {
+    width: 15%;
+}
 
 
 

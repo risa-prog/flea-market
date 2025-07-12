@@ -16,9 +16,19 @@
             <form action="/transaction/review?transaction_id={{$transaction_id}}" method="post">
                 @csrf
                 <div class="rating">
-                    @for ($i = 1; $i <= 5; $i++)
+                    <input type="text">5
+                    <label for="">label</label>
+                    <input type="text">4
+                    <label for="">label</label>
+                    <input type="text">3
+                    <label for="">label</label>
+                    <input type="text">2
+                    <label for="">label</label>
+                    <input type="text">1
+                    <label for="">label</label>
+                    <!-- @for ($i = 1; $i <= 5; $i++)
                         <input type="radio" name="rating" value="{{ $i }}" required> ⭐️
-                        @endfor
+                        @endfor -->
                 </div>
                 <button>送信する</button>
             </form>

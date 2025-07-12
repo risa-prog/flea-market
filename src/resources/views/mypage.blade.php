@@ -24,13 +24,24 @@
         </div>
         <div>
             <a href="/mypage?tab=transaction">取引中の商品</a>
-            <span></span>
+            <span>{{ count($unreadComments) }}</span>
         </div>
     </div>
     <div class="mypage__item">
-    @foreach($items as $item)
+        @foreach($items as $item)
         @if($item->transaction != null)
         <div class="mypage__item-group">
+            @php
+            $unreadComments = collect();
+            if(!is_null($item->transaction->transactionComments)) {
+            $unreadComments = $item->transaction->transactionComments->where('is_read', 1);
+            }
+            @endphp
+            @if($unreadComments->isNotEmpty())
+            <div>
+                <p>{{ $unreadComments->count() }}</p>
+            </div>
+            @endif
             <div class="mypage__item-image">
                 <a href="/trading_chat?item_id={{$item->id}}">
                     <img class="mypage__item-image-inner" src="{{$item->item_image}}" alt="">
@@ -48,6 +59,6 @@
             <p class="mypage__item-name">{{$item->item_name}}</p>
         </div>
         @endif
-    @endforeach
+        @endforeach
     </div>
-@endsection
+    @endsection

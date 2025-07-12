@@ -44,14 +44,17 @@
             </div>
         </div>
         <div class="trading-chat__comment">
-            @if(!empty($client->transactionComments))
-            @foreach($client->transactionComments as $transactionComment)
+            @if(!empty($item->transaction->transactionComments))
+            @php
+            $client_comments = $item->transaction->transactionComments->where('sender_id','!=',Auth::id());
+            @endphp
+            @foreach($client_comments as $client_comment)
             <div class="trading-chat__comment-client">
                 <div class="trading-chat__comment-image">
-                    <img src="{{asset('storage/'.optional($transactionComment)->image)}}" alt="">
+                    <img src="{{asset('storage/'.optional($client_comment)->image)}}" alt="">
                     <p class=" trading-chat__comment-user">{{$client->member->user_name}}</p>
                 </div>
-                <p>{{$transactionComment->content}}</p>
+                <p>{{ $client_comment->content }}</p>
             </div>
             @endforeach
             @endif
@@ -61,57 +64,58 @@
                 $my_transaction_comment=$my_transaction_comments[$i];
                 @endphp
                 <div class="trading-chat__comment-myself">
-                <div>
-                    <p>{{Auth::user()->member->user_name}}</p>
-                    <img src="{{asset('storage/'.optional($item)->item_image)}}" alt="">
+                <p>{{Auth::user()->member->user_name}}</p>
+                <div class="trading-chat__comment-myself-image">
+                    <img src="{{asset('storage/'.optional($my_transaction_comment)->image)}}" alt="">
                 </div>
-                <form action="{{ route('comment.edit') }}" method="post">
-                    @csrf
-                    <input type="hidden" name="id" value="{{$my_transaction_comment->id}}">
-                    <input type="hidden" name="item_id" value="{{$item->id}}">
-                    @error("content2.$i")
-                    <div class="error">
-                        <p class="error-message">{{ $message }}</p>
-                    </div>
-                    @enderror
-                    <textarea name="content2[{{$i}}]">{{ old("content2.$i",$my_transaction_comment->content) }}</textarea>
-                    <div>
-                        <button name="action" value="delete">
-                            削除
-                        </button>
-                        <button name="action" value="update">
-                            編集
-                        </button>
-                    </div>
-                </form>
         </div>
-        @endfor
-        @endif
-    </div>
-
-    <div>
-        <form class="comment-add-form" action="/trading_chat/comment/create" method="post" enctype="multipart/form-data">
+        <form action="{{ route('comment.edit') }}" method="post">
             @csrf
+            <input type="hidden" name="id" value="{{$my_transaction_comment->id}}">
+            <input type="hidden" name="item_id" value="{{$item->id}}">
+            @error("content2.$i")
             <div class="error">
-                @error('content')
                 <p class="error-message">{{ $message }}</p>
-                @enderror
             </div>
-            <div class="error">
-                @error('image')
-                <p class="error-message">{{ $message }}</p>
-                @enderror
-            </div>
+            @enderror
+            <textarea name="content2[{{$i}}]">{{ old("content2.$i",$my_transaction_comment->content) }}</textarea>
             <div>
-                <textarea name="content" placeholder="取引メッセージを記入してください">{{ old('content', session('content')) }}</textarea>
-                <label for="image">画像を追加</label>
-                <input type="file" name="image" id="image">
-                <input type="hidden" name="transaction_id" value="{{$item->transaction->id}}">
-                <input type="hidden" name="item_id" value="{{$item->id}}">
-                <button>c</button>
+                <button name="action" value="delete">
+                    削除
+                </button>
+                <button name="action" value="update">
+                    編集
+                </button>
             </div>
         </form>
     </div>
+    @endfor
+    @endif
+</div>
+
+<div>
+    <form class="comment-add-form" action="/trading_chat/comment/create" method="post" enctype="multipart/form-data">
+        @csrf
+        <div class="error">
+            @error('content')
+            <p class="error-message">{{ $message }}</p>
+            @enderror
+        </div>
+        <div class="error">
+            @error('image')
+            <p class="error-message">{{ $message }}</p>
+            @enderror
+        </div>
+        <div>
+            <textarea name="content" placeholder="取引メッセージを記入してください">{{ old('content', session('content')) }}</textarea>
+            <label for="image">画像を追加</label>
+            <input type="file" name="image" id="image">
+            <input type="hidden" name="transaction_id" value="{{$item->transaction->id}}">
+            <input type="hidden" name="item_id" value="{{$item->id}}">
+            <button>c</button>
+        </div>
+    </form>
+</div>
 </div>
 </div>
 @endsection
