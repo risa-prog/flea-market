@@ -67,4 +67,8 @@ class User extends Authenticatable
     public function transactionComments() {
         return $this->hasMany('App\Models\TransactionComment');
     }
+
+    public function transactionReviews() {
+        return $this->hasMany('App\Models\TransactionReview', 'reviewee_id');
+    }
 }

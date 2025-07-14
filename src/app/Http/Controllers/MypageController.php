@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Member;
+use App\Models\User;
 use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\AddressRequest;
 use Illuminate\Support\Facades\Auth;
@@ -29,23 +30,34 @@ class MypageController extends Controller
                 $items = Item::with('transaction')
                     ->whereHas('transaction', function ($query) {
                         $query->where(function ($q) {
-                            $q->where('buyer_id', Auth::id())
+                            $q->where      ('buyer_id', Auth::id())
                                 ->orWhere('seller_id', Auth::id());
-                        })->where('status', 1);
-                })->get();
-            }
+                        });
+                    })
+                    ->get();
+                }
 
-        $unreadComments = TransactionComment::where('is_read', 1)
+        $unreadCount = TransactionComment::where('is_read', 1)
             ->whereHas('transaction', function ($query) use ($user) {
                 $query->where(function ($q) use ($user) {
                     $q->where('buyer_id', $user->id)
                         ->orWhere('seller_id', $user->id);
                 });
             })
-            ->where('sender_id', '!=', $user->id) // 自分以外が送ったもの
-            ->get();
+            ->where('receiver_id', $user->id)
+            ->get()
+            ->count();
 
-        return view('mypage',compact('member','items','unreadComments'));
+        $user = User::with('transactionReviews')->find($user->id);
+        $ratings = $user->transactionReviews;
+
+        if($ratings->isNotEmpty()){
+            $averageRating = round($ratings->avg('rating'));
+        }else {
+            $averageRating = null;
+        }
+        
+        return view('mypage',compact('member','items','unreadCount','averageRating'));
     }
 
     public function profile() {
@@ -65,7 +77,7 @@ class MypageController extends Controller
     
         $member->update($profile_img);
 
-        return redirect('/mypage');
+        return redirect('/mypage?tab=sell');
     }
 
     public function set(AddressRequest $request){

@@ -59,7 +59,6 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/trading_chat/comment/create',[TransactionCommentController::class,'create']);
     Route::post('/trading_chat/comment/edit', [TransactionCommentController::class, 'edit'])->name('comment.edit');
     Route::post('/item/transaction/complete',[TradingChatController::class,'complete']);
-    Route::get('/transaction/review', [TransactionReviewController::class, 'index'])->name('transaction.review');
     Route::post('/transaction/review',[TransactionReviewController::class,'create']);
 });
 

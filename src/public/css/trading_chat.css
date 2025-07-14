@@ -3,50 +3,353 @@
 }
 
 .trading-chat__side {
-    width:20%;
+    width: 20%;
+    background-color: #868686;
+    height: 100vh;
+    text-align: center;
+}
+
+.trading-chat__side-ttl {
+    color: #FFFFFF;
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 60px;
+}
+
+ul {
+    list-style: none;
+    
+}
+
+li {
+    margin: 30px 0;
+    background-color: #EEEFEB;
+    width: 80%;
+    border-radius: 5px;
+}
+
+.trading-chat__side-link {
+    display: inline-block;
+    text-decoration: none;
+    padding: 4px 16px;
+    font-weight: bold;
+    font-size: 18px;
 }
 
 .trading-chat__content {
-    width:80%;
+    width: 80%;
 }
 
 .trading-chat__top {
-    display:flex;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: space-between;   
+    border-bottom: 1px solid #5F5F5F;
+}
+
+.trading-chat__ttl-text {
+    font-weight: bold;
+    font-size: 32px;
+    width: 100%;
+    white-space: nowrap;
+}
+
+.transaction-form__button {
+    margin-right: 20px;
+}
+
+.transaction-form__submit {
+    color: #FFFFFF;
+    background-color: #FF8181;
+    border: none;
+    border-radius: 16px;
+    padding: 8px;
+    font-size: 16px;
 }
 
 .trading-chat__content-item {
     display: flex;
+    border-bottom: 1px solid #5F5F5F;
+}
+
+.trading-chat__ttl {
+    display: flex;
+    padding: 16px 24px;
+}
+
+.trading-chat__user-image {
+    width: 20%;
+    margin-top: 20px;
 }
 
 .trading-chat__item-image {
-    width: 30%;
-    margin-right: 50px;
+    width: 25%;
+    margin: 16px 50px 0 16px;
 }
 
 img {
     width: 100%;
 }
 
-.trading-chat__comment-myself {
+.trading-chat__item-detail {
+    padding: 16px 8px;
+}
+
+.trading-chat__item-name {
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 32px;
+}
+
+.trading-chat__item-price {
+    font-size: 20px;
+}
+
+.trading-chat__comment {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 16px 24px;
+}
+
+.trading-chat__comment-client {
+    grid-column: 1 / 2;
+}
+
+.trading-chat__comment-client-name {
+    padding: 5px;
+}
+
+.trading-chat__comment-client-text {
+    background-color: #D9D9D9;
+    padding: 10px;
+    width: 80%;
+}
+
+.trading-chat__comment-client-content {
     display: flex;
-    /* justify-content: flex-end; */
     align-items: center;
 }
 
-.trading-chat__comment-myself-image {
-    width: 15%;
+.trading-chat__comment-client-image {
+    width: 20%;
 }
 
+.trading-chat__comment-myself {
+    grid-column: 2 / 2;
+}
 
+.trading-chat__comment-myself-name {
+    padding: 5px;
+}
+
+.trading-chat__comment-myself-content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 0 40px 10px 0;
+}
+
+.trading-chat__comment-myself-image {
+    width: 24%;
+}
+
+.my-comment-form__textarea {
+    border: none;
+    background-color: #D9D9D9;
+    padding: 10px;
+    width: 80%;
+    font-size: 16px;
+}
+
+.my-comment-form__button-delete {
+    border: none;
+    background-color: transparent;
+    color:#5F5F5F;
+    border-radius: 5px;
+}
+
+.my-comment-form__button-update {
+    border: none;
+    background-color: transparent;
+    color: #5F5F5F;
+}
+
+.trading-chat-form {
+    /* position: fixed;
+    bottom: 0;
+    margin-bottom: 30px; */
+    margin: 30px 0; 
+}
+
+.trading-chat-form__item {
+    display: flex;
+    align-items: center;
+    margin-left: 16px;
+}
+
+.trading-chat-form__textarea {
+    width: 70%;
+    height: 40px;
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.trading-chat-form__label {
+    padding: 4px 6px;
+    color: #FF5455;
+    border:2px solid #FF5455;
+    cursor: pointer;
+    margin: 0 8px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.trading-chat-form__input {
+    display: none;
+}
+
+.trading-chat-form__button {
+    width: 10%;
+    height: 40px;
+}
+
+.trading-chat-form__submit {
+    /* width: 80%;
+    height: 100%; */
+    width: 10%;
+    height: 40px;
+    background-color: none;
+    border: none;
+}
+
+.trading-chat-form__image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.error-message {
+    color:red;
+}
+
+.transaction-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.transaction-modal__content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+}
+
+.transaction-modal__message {
+    font-weight: 500;
+    font-size: 30px;
+    border-bottom: 1px solid #808080;
+}
+
+.transaction-modal__review {
+    color: #868686;
+}
+
+.review-form__star-rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+    width: 50%;
+}
+
+.review-form__star-rating input[type="radio"] {
+    display: none;
+}
+
+.review-form__star-rating label {
+    font-size: 2rem;
+    color: #ccc;
+    cursor: pointer;
+}
+
+.review-form__star-rating input[type="radio"]:checked~label {
+    color: gold;
+}
+
+.review-form__star-rating label:hover,
+.review-form__star-rating label:hover~label {
+    color: gold;
+}
+
+.review-form__button {
+    text-align: right;
+    border-top: 1px solid #808080;
+    padding: 8px 16px;
+}
+
+.review-form__submit {
+    background-color: #FF8181;
+    color: #FFFFFF;
+    padding: 4px 8px;
+    cursor: pointer;
+    border: none;
+
+    font-size: 16px;
+    border-radius: 3px;
+}
 
 @media screen and (max-width:1200px) {
+    .trading-chat__side-ttl {
+            font-size: 25px;
+        }
+
+    li {
+        width: 90%;
+    }
+
+    .trading-chat__side-link {
+        font-size: 16px;
+    }
+
     .trading-chat__side {
-            width: 30%;
+            width: 25%;
     }
     
     .trading-chat__content {
-        width: 70%;
+        width: 75%;
+    }
+
+    .trading-chat__ttl-text {
+        font-size: 26px;
+    }
+
+    .trading-chat__user-image {
+           width: 15%;
+    }
+
+    .transaction-form__button {
+        margin-right: 8px;
+    }
+
+    .transaction-form__submit {
+        padding: 4px;
+        font-size: 12px;
+    }
+
+    .trading-chat__ttl {
+        padding: 8px 12px;
+    }
+
+    .trading-chat-form__textarea {
+            width: 60%;
     }
 }

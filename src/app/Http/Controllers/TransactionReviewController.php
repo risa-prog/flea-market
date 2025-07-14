@@ -6,15 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Transaction;
 use App\Models\TransactionReview;
+use App\Http\Requests\TransactionReviewRequest;
 
 class TransactionReviewController extends Controller
 {
-    public function index(Request $request) {
-        $transaction_id = $request->transaction_id;
-        return view('transaction_review',compact('transaction_id'));
-    }
-
-    public function create(Request $request) {
+    public function create(TransactionReviewRequest $request) {
         $transaction = Transaction::find($request->transaction_id);
         $reviewer_id = Auth::id();
 
