@@ -74,10 +74,8 @@
                         <img src="{{asset('storage/'.optional($my_transaction_comment)->image)}}" alt="">
                     </div>
                 </div>
-                <form action="{{ route('comment.edit') }}" method="post" class="my-comment-form">
+                <form action="{{ route('comment.edit',['id' => $my_transaction_comment->id, 'item_id' => $item->id]) }}" method="post" class="my-comment-form">
                     @csrf
-                    <input type="hidden" name="id" value="{{$my_transaction_comment->id}}">
-                    <input type="hidden" name="item_id" value="{{$item->id}}">
                     @error("content2.$i")
                     <div class="error">
                         <p class="error-message">{{ $message }}</p>
@@ -98,7 +96,7 @@
         @endif
     </div>
     <div class="trading-chat-form">
-        <form action="/trading_chat/comment/create" method="post" enctype="multipart/form-data">
+        <form action="/trading_chat/comment/create?transaction_id={{$item->transaction->id}}&item_id={{$item->id}}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="error">
                 @error('content')
@@ -114,8 +112,6 @@
                 <textarea class="trading-chat-form__textarea" name="content" placeholder="取引メッセージを記入してください">{{ old('content', session('form_data.content')) }}</textarea>
                 <label class="trading-chat-form__label" for="image">画像を追加</label>
                 <input class="trading-chat-form__input" type="file" name="image" id="image">
-                <input type="hidden" name="transaction_id" value="{{$item->transaction->id}}">
-                <input type="hidden" name="item_id" value="{{$item->id}}">
                 <!-- <div class="trading-chat-form__button"> -->
                 <button class="trading-chat-form__submit">
                     <img class="trading-chat-form__image" src="{{asset('img/send_icon_128761.png')}}" alt="">

@@ -14,7 +14,18 @@
     margin-bottom:30px;
 }
 
-.profile-form-img__submit {
+.profile-form-img__input {
+    display: none;
+}
+
+.profile-img__label {
+    border: 2px solid #ff5455;
+    border-radius: 5px;
+    color: #ff5455;
+    padding: 8px;
+}
+
+/* .profile-form-img__submit {
     border:1px solid #ff5455;
     border-radius: 3px;
     padding:4px 8px;
@@ -22,7 +33,7 @@
     font-size: 12px;
     font-weight: bold;
 
-}
+} */
 
 .profile-form__group {
     width: 100%;

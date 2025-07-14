@@ -7,27 +7,25 @@
 @section('content')
 <div class="profile-form">
     <div class="profile-form__ttl">
-            <h2>プロフィール設定</h2>
+        <h2>プロフィール設定</h2>
     </div>
     <div class="profile-img-form">
-        <form action="/mypage/profile_img" enctype="multipart/form-data" method="post">
-        @csrf
+        <form action="/mypage/profile" enctype="multipart/form-data" method="post">
+            @csrf
             <div class="profile-img-form__img">
-                <div class="profile-img-form__content">
-                    <input class="profile-form-img__input" type="file" name="profile_image" value="{{optional($member)['profile_image']}}">
+                <div class="profile-img-content">
+                    <label for="profile-img" class="profile-img__label">画像を選択する</label>
+                    <input id="profile-img" class="profile-form-img__input" type="file" name="profile_image" value="{{optional($member)['profile_image']}}">
                 </div>
-                <div class="profile-img-form__button">
+                <!-- <div class="profile-img-form__button">
                     <button class="profile-form-img__submit">画像を選択する</button>
-                </div>
+                </div> -->
             </div>
             <div class="profile-form__error">
-                    @error('profile_image')
-                    <p class="profile-form__error-message">{{$message}}</p>
-                    @enderror
+                @error('profile_image')
+                <p class="profile-form__error-message">{{$message}}</p>
+                @enderror
             </div>
-        </form>
-        <form action="/mypage/profile" method="post">
-            @csrf
             <div class="profile-form__group">
                 <label class="profile-form__label">ユーザー名</label>
                 <div class="profile-form__item">

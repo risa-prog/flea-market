@@ -18,7 +18,7 @@ class TradingChatController extends Controller
         $user = Auth::user();
 
         // ユーザーが取引のある商品を全て取得
-        $transactions = Transaction::where(function ($query) use ($user){
+        $transactions = Transaction::with('item')->where(function ($query) use ($user){
             $query->where('seller_id', $user->id)
                 ->orWhere('buyer_id', $user->id);
         })
@@ -38,7 +38,7 @@ class TradingChatController extends Controller
                 return optional($matchedComment)->created_at;
             });
 
-        $transaction = Transaction::where('item_id', $item->id)->first();
+        $transaction = Transaction::with(['item','transactionComments'])->where('item_id', $item->id)->first();
 
         // 取引相手のデータを取得
         if($user->id === $transaction->buyer_id) {

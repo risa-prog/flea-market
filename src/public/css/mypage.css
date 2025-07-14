@@ -2,40 +2,38 @@
    padding: 64px 32px ;
 }
 
-/* .mypage__user {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    align-items: center;
-    margin-bottom: 50px;
-} */
-
 .mypage__top {
-    display: flex;
-    justify-content: space-around;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    /* display: flex;
+    justify-content: space-around; */
     align-items: center;
     margin-bottom: 50px;
 }
 
 .mypage__user {
+    grid-column: 2 / 4;
     display: flex;
-    text-align: center;
+    align-items: center;
 }
 
 .mypage__user-name {
     margin-left: 16px;
     font-weight: bold;
-    font-size:36px;
+    font-size:40px;
     width: 80%;
+    white-space: nowrap;
 }
 
 .mypage__user-image {
     margin-right: 16px;
+    margin-bottom: 30px;
     text-align: right;
-    width: 80%;
+    width: 25%;
 }
 
 .mypage__user-image-inner {
-    width:60%;
+    width:100%;
 }
 
 .mypage__user-review {
@@ -62,6 +60,7 @@
     padding: 8px 16px;
     display: inline-block;
     font-weight: bold;
+    white-space: nowrap;
 }
 
 .mypage__link{
@@ -177,6 +176,10 @@
 
     .mypage__user-review-star {
         font-size: 24px;
+    }
+
+    .mypage__user-image {
+        width: 30%;
     }
 }
 

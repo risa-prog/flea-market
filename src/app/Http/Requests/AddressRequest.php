@@ -24,18 +24,19 @@ class AddressRequest extends FormRequest
     public function rules()
     {
         return [
+            'profile_image' => 'file|mimes:jpg,jpeg,png',
             'user_name'=>'required',
             'post_code'=>'required',
             'post_code'=>' regex: /^[0-9]{3}[-][0-9]{4}$/',
             'address'=>'required',
             'building'=>'required',
             'profile_image'=>'file|mimes:jpeg,png',
-            
         ];
     }
 
     public function messages(){
         return [
+            'profile_image.mines' => '拡張子が.jpegもしくは.pngタイプのファイルを指定してください',
             'user_name.required'=>'お名前を入力してください',
             'post_code.required'=>'郵便番号を入力してください',
             'post_code.regex'=>'郵便番号はハイフンありの8文字で入力してください',
