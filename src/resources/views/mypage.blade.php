@@ -66,7 +66,7 @@
             </div>
             <a href="/trading_chat?item_id={{$item->id}}" class="transaction-item-link">{{$item->item_name}}</a>
             @if($item->transaction->status === 2)
-            <p>Sold</p>
+            <p class="transaction-complete">取引完了</p>
             @endif
         </div>
         @else

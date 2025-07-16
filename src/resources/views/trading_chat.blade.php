@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.default')
 
 @section('css')
 <link rel="stylesheet" href="{{asset('css/trading_chat.css')}}">
@@ -27,18 +27,22 @@
                 <h2 class="trading-chat__ttl-text">「{{$client->member->user_name}}」さんとの取引画面</h2>
             </div>
             @if(Auth::id() === $item->transaction->buyer_id && $item->transaction->status === 1)
-            <form action="/item/transaction/complete?transaction_id={{$item->transaction->id}}&item_id={{$item->id}}" method="post">
+            <form action="{{ route('transaction.complete',['transaction_id' => $item->transaction->id, 'item_id' => $item->id]) }}" method="post">
                 @csrf
                 <div class="transaction-form__button">
                     <button class="transaction-form__submit">取引を完了する</button>
                 </div>
             </form>
+            @elseif($item->transaction->status === 2)
+                <p class="transaction-complete-text">取引完了</p>
             @endif
         </div>
         <div class="trading-chat__content-item">
             <div class="trading-chat__item-image">
                 <img src="{{$item->item_image}}" alt="">
+                @if($item->item_image)
                 <img src="{{asset('storage/' . $item->item_image)}}" alt="">
+                @endif
             </div>
             <div class="trading-chat__item-detail">
                 <h3 class="trading-chat__item-name">{{$item->item_name}}</h3>
@@ -96,20 +100,20 @@
         @endif
     </div>
     <div class="trading-chat-form">
-        <form action="/trading_chat/comment/create?transaction_id={{$item->transaction->id}}&item_id={{$item->id}}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('comment.create', ['transaction_id' => $item->transaction->id, 'item_id' => $item->id]) }}" method="post" enctype="multipart/form-data" id="tradingChatForm">
             @csrf
             <div class="error">
                 @error('content')
-                <p class="error-message">{{ $message }}</p>
+                <p class="chat-error-message">{{ $message }}</p>
                 @enderror
             </div>
             <div class="error">
                 @error('image')
-                <p class="error-message">{{ $message }}</p>
+                <p class="chat-error-message">{{ $message }}</p>
                 @enderror
             </div>
             <div class="trading-chat-form__item">
-                <textarea class="trading-chat-form__textarea" name="content" placeholder="取引メッセージを記入してください">{{ old('content', session('form_data.content')) }}</textarea>
+                <textarea class="trading-chat-form__textarea" name="content" placeholder="取引メッセージを記入してください">{{ old('content') }}</textarea>
                 <label class="trading-chat-form__label" for="image">画像を追加</label>
                 <input class="trading-chat-form__input" type="file" name="image" id="image">
                 <!-- <div class="trading-chat-form__button"> -->
@@ -134,7 +138,7 @@
         <p class="transaction-modal__message">取引が完了しました。</p>
         <div class="transaction-modal__review">
             <p class="transaction-modal__review">今回の取引相手はどうでしたか？</p>
-            <form action="/transaction/review?transaction_id={{$item->transaction->id}}" method="post" class="review-form">
+            <form action="{{ route('transaction.review', ['transaction_id' => $item->transaction->id]) }}" method="post" class="review-form">
                 @csrf
                 <div class="review-form__star-rating">
                     @for ($i = 5; $i >= 1; $i--)

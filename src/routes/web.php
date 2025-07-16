@@ -38,7 +38,7 @@ Route::get('/', [ItemController::class, 'index']);
 Route::get('/item/:item_id', [ItemController::class, 'item']);
 
 Route::middleware(['auth'])->group(function(){
-    Route::get('/purchase/:item_id',[ItemController::class,'purchase']);
+    Route::get('/purchase/:item_id',[ItemController::class,'purchase'])->name('purchase');
     
     Route::get('/sell',[ItemController::class,'sell']);
     Route::post('/item_comment',[ItemController::class,'comment']);
@@ -56,12 +56,12 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/mypage', [MypageController::class, 'mypage'])->name('mypage');
     Route::get('/trading_chat', [TradingChatController::class, 'index'])->name('trading.chat');
 
-    Route::post('/trading_chat/comment/create',[TransactionCommentController::class,'create']);
+    Route::post('/trading_chat/comment/create',[TransactionCommentController::class,'create'])->name('comment.create');
     Route::post('/trading_chat/comment/edit', [TransactionCommentController::class, 'edit'])->name('comment.edit');
-    Route::post('/item/transaction/complete',[TradingChatController::class,'complete']);
-    Route::post('/transaction/review',[TransactionReviewController::class,'create']);
+    Route::post('/item/transaction/complete',[TradingChatController::class,'complete'])->name('transaction.complete');
+    Route::post('/transaction/review',[TransactionReviewController::class,'create'])->name('transaction.review');
 
-    Route::post('/purchase/transaction',[TransactionController::class,'create']);
+    Route::post('/purchase/transaction',[TransactionController::class,'create'])->name('purchase.transaction');
 });
 
 Route::get('/search/item',[ItemController::class,'search']);

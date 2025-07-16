@@ -22,7 +22,6 @@ class TradingChatController extends Controller
             $query->where('seller_id', $user->id)
                 ->orWhere('buyer_id', $user->id);
         })
-        ->where('status', 1)
         ->get();
 
         // ユーザーが取引のある商品のうち、新着メッセージが来た順にソート
@@ -51,12 +50,6 @@ class TradingChatController extends Controller
         
         $my_transaction_comments = TransactionComment::where('sender_id',$user->id)->where('transaction_id',$transaction->id)->get();
 
-        // session([
-        //     'form_data' => [
-        //         'content' => $request->input('content')
-        //     ]
-        // ]);
-
         // 既読処理
         if ($transaction->transactionComments->isNotEmpty()) {
             foreach ($transaction->transactionComments as $transaction_comment) {
@@ -65,14 +58,6 @@ class TradingChatController extends Controller
                 }
             }
         }
-
-        // $hasReviewed = TransactionReview::with(['transaction' => function($query) {
-        //     $query->where('status', 2);
-        // }])
-        // ->where('transaction_id', $transaction->id)
-        // ->where('reviewer_id', $user->id)
-        // ->exists();
-        // dd($hasReviewed);
 
         $hasReviewed = TransactionReview::where('transaction_id', $transaction->id)
             ->where('reviewer_id', Auth::id())

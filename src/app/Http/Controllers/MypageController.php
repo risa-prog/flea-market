@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Member;
 use App\Models\User;
+use App\Models\Transaction;
 use App\Http\Requests\AddressRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Models\TransactionComment;
@@ -22,18 +23,36 @@ class MypageController extends Controller
                     $query->where('user_id',Auth::id());
                 })->get();
             }elseif($request->tab === "buy"){
-                $items = Item::with(['order','transaction'])->whereHas('order',function ($query) {
-                    $query->where('user_id',Auth::id());
-                })->get();
+                // 前回の模擬案件の場合
+                // $items = Item::with(['order','transaction'])->whereHas('order',function ($query) {
+                //     $query->where('user_id',Auth::id());
+                // })->get();
+
+                // 今回のテストの場合
+                $items = Item::with('transaction')->whereHas('transaction',function ($query) use ($user) {
+                    $query->where('buyer_id',$user->id);
+                })
+                ->get();
             }elseif($request->tab === "transaction"){
-                $items = Item::with('transaction.transactionComments')
-                    ->whereHas('transaction', function ($query) {
-                        $query->where(function ($q) {
-                            $q->where      ('buyer_id', Auth::id())
-                                ->orWhere('seller_id', Auth::id());
-                        });
-                    })->get();
-                }
+            $transactions = Transaction::with(['item', 'transactionComments'])
+                ->where(function ($query) use ($user) {
+                    $query->where('seller_id', $user->id)
+                        ->orWhere('buyer_id', $user->id);
+                })
+                ->get();
+
+            // 新着メッセージ順に並べたアイテムのコレクションを作成
+            $items = $transactions->sortByDesc(function ($transaction) use ($user) {
+                // 自分宛のコメントのうち、最新の created_at を取得
+                $matchedComment = $transaction->transactionComments
+                    ->where('receiver_id', $user->id)
+                    ->sortByDesc('created_at')
+                    ->first();
+
+                // 該当コメントの created_at（なければ null → 最後に並ぶ）
+                return optional($matchedComment)->created_at;
+            })->pluck('item'); 
+        }
 
         $unreadCount = TransactionComment::where('is_read', 1)
             ->whereHas('transaction', function ($query) use ($user) {

@@ -10,9 +10,9 @@
         {{session('message')}}
     </div>
 @endif
-<form action="/order" method="post">
+<form action="/order}}" method="post">
     @csrf
-    <input type="hidden" name="item_id" value="{{$item->id}}">
+    <!-- <input type="hidden" name="item_id" value="{{$item->id}}"> -->
     <div class="purchase-form">
         <div class="purchase-form__item">
             <div class="purchase-form__item-content">
@@ -51,7 +51,7 @@
                     </div>
                     @error('payment_method')
                     <div class="purchase-form__error">
-                        <p class="purchase-form__error-message">{{$message}}</p>
+                        <p class="purchase-form__error-message">{{ $message }}</p>
                     </div>
                     @enderror
                 </div>
@@ -59,35 +59,35 @@
                     <div class="purchase-form__shipping-flex">
                         <label class="purchase-form__shipping-label">配送先</label>
                         <div class="purchase-form__link">
-                            <a href="/purchase/address/:item_id?id={{$item->id}}">変更する</a>
+                            <button name="button" value="address">変更する</button>
                         </div>
                     </div>
                     <div class="purchase-form__shipping-address">
                         <span>〒</span>
-                        <input type="text" name="post_code" value="{{$member['post_code']}}" readonly>
+                        <input type="text" name="post_code" value="{{ $member['post_code']}}" readonly>
                     </div>
                     <div class="purchase-form__shipping-address">
-                        <input  type="text" name="address" value="{{$member['address']}}" readonly>
-                        <input type="text" name="building" value="{{$member['building']}}" readonly>
+                        <input  type="text" name="address" value="{{ $member['address'] }}" readonly>
+                        <input type="text" name="building" value="{{ $member['building'] }}" readonly>
                     </div>
                     @if($errors->has('post_code'))
                     <div>
-                        <p>{{$message}}</p>
+                        <p>{{ $message }}</p>
                     </div>
                     @elseif($errors->has('address'))
                     <div>
-                        <p>{{$message}}</p>
+                        <p>{{ $message }}</p>
                     </div>
                     @elseif($errors->has('building'))
                     <div>
-                        <p>{{$message}}</p>
+                        <p>{{ $message }}</p>
                     </div>
                     @endif
                 </div>
             </div>
             <div class="purchase-form__button">
                 @if(empty($item->order))
-                <button class="purchase-form__submit">購入する</button>
+                <button name="button" value="purchase" class="purchase-form__submit">購入する</button>
                 @else
                 <p>Sold</p>
                 @endif

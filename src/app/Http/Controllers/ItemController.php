@@ -70,23 +70,13 @@ class ItemController extends Controller
     public function purchase(Request $request){
         $item = Item::find($request->id);
         $user = Auth::user();
-        $member = Member::where('user_id',$user->id)->first();
-        $profile = $member->profile_image;
+        $member = Member::where('user_id',$user->id)->first()->toArray();
 
-        if(empty($member)){
-            return view('profile',compact('member','profile'));
-        }else{
-            $member=$user->member->only(['post_code','address','building']);
-            return view('purchase',compact('item','member'));
-        }
+        return view('purchase',compact('item','member'));   
     }
 
     public function address(Request $request){
-        $item_id = $request->id;
-        $user = Auth::user();
-        $member = $user->member->only(['post_code','address','building']);
         
-        return view('address',compact('member','item_id'));
     }
 
     public function comment(CommentRequest $request){
@@ -113,25 +103,39 @@ class ItemController extends Controller
         return view('purchase',compact('member','item'));
     }
 
-    public function order(PurchaseRequest $request){
-        $order = $request->all();
-        unset($order['_token']);
-        $user_id = Auth::id();
-        $order = array_merge($order,array('user_id'=>"$user_id"));
+    public function order(Request $request){
+        $button = $request->input('button');
 
-        $item = Item::find($request->item_id);
+        if ($button === 'address') {
+            $item_id = $request->item_id;
+            $user = Auth::user();
+            $member = Member::with('user')->first();
 
-        if($user_id === $item->user_id){
-            $request->session()->flash('message','その商品は購入できません');
-        }else{
-            Order::create($order);
+            return view('address', compact('member', 'item_id'));
+        } elseif($button === 'purchase') {
+            $formRequest = app(PurchaseRequest::class);
+            $formRequest->setContainer(app())->validateResolved(); 
 
-            $request->session()->flash('message','商品を購入しました');
+            $validated = $formRequest->validated();
+            
+            $order = $validated;
+            $user_id = Auth::id();
+            $order['user_id'] = $user_id;
+            $item = Item::find($request->item_id);
+            $order['item_id'] = $item->id;
+
+            if ($user_id === $item->user_id) {
+                $request->session()->flash('message', 'その商品は購入できません');
+            } else {
+                Order::create($order);
+
+                $request->session()->flash('message', '商品を購入しました');
+            }
+
+            // $previousUrl = app('url')->previous();
+            // return redirect()->to($previousUrl . '?' . http_build_query(['id' => $order['item_id']]))->withInput();
+            return redirect()->route('purchase',['item_id',$item->id]);
         }
-
-        $previousUrl = app('url')->previous();
-        return redirect()->to($previousUrl.'?'. http_build_query(['id'=>$order['item_id']]))->withInput(); 
-
     }
 
     public function create(ExhibitionRequest $request){

@@ -113,6 +113,7 @@
 .transaction-item-link {
     text-decoration: none;
     color: #000000;
+    white-space: nowrap;
 }
 
 .mypage__item{
@@ -126,18 +127,9 @@
     padding: 40px; 
 }
 
-/* .unread-message {
-    position: absolute;
-    top: 0;
-    left: 0;
+.transaction-complete {
+    color: #6c757d;
 }
-
-.unread-message__count {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 9999;
-} */
 
 .unread-message {
     position: absolute;
@@ -167,6 +159,10 @@
     width: 100%;
     height: auto;
     z-index: 1;
+}
+
+.mypage__item-name {
+    white-space: nowrap;
 }
 
 @media screen and (max-width:1230px) {

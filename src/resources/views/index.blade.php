@@ -37,11 +37,11 @@
             <label>Sold</label>
             @endif
             @if(!$item->transaction)
-            <form action="/purchase/transaction?item_id={{$item->id}}" method="post">
+            <form action="{{ route('purchase.transaction',['item_id' => $item->id]) }}" method="post">
                 @csrf
-                <button>取引する</button>
-            </form>
-            @endif
+                    <button>取引する</button>
+                </form>
+                @endif
         </div>
         @endforeach
         @endif
