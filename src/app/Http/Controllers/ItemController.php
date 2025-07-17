@@ -8,6 +8,7 @@ use App\Models\Member;
 use App\Models\Order;
 use App\Models\Comment;
 use App\Models\Category;
+use App\Models\Transaction;
 use App\Http\Requests\CommentRequest;
 use App\Http\Requests\PurchaseRequest;
 use App\Http\Requests\ExhibitionRequest;
@@ -75,26 +76,21 @@ class ItemController extends Controller
         return view('purchase',compact('item','member'));   
     }
 
-    public function address(Request $request){
-        
-    }
 
     public function comment(CommentRequest $request){
         $user = Auth::user();
         $member = Member::where('user_id',$user->id)->first();
+        
         $profile = $member->profile_image;
+        
+        $comment = $request->all();
+        unset($comment['_token']);
+        Comment::create($comment);
 
-        if(empty($member)){
-            return view('profile',compact('member','profile'));
-        }else{
-            $comment = $request->all();
-            unset($comment['_token']);
-            Comment::create($comment);
-
-            $previousUrl = url()->previous();
-            return redirect()->to($previousUrl.'?'. http_build_query(['id'=>$comment['item_id']]))->withInput();
-        }
+        $previousUrl = url()->previous();
+        return redirect()->to($previousUrl.'?'. http_build_query(['id'=>$comment['item_id']]))->withInput();      
     }
+    
     
     public function edit(Shipping_AddressRequest $request) {
         $member = $request->only(['post_code','address','building']);
@@ -103,28 +99,22 @@ class ItemController extends Controller
         return view('purchase',compact('member','item'));
     }
 
-    public function order(Request $request){
+    public function order(PurchaseRequest $request)
+    {
         $button = $request->input('button');
+        $user = Auth::user();
 
         if ($button === 'address') {
             $item_id = $request->item_id;
-            $user = Auth::user();
             $member = Member::with('user')->first();
 
             return view('address', compact('member', 'item_id'));
-        } elseif($button === 'purchase') {
-            $formRequest = app(PurchaseRequest::class);
-            $formRequest->setContainer(app())->validateResolved(); 
-
-            $validated = $formRequest->validated();
-            
-            $order = $validated;
-            $user_id = Auth::id();
-            $order['user_id'] = $user_id;
+        } elseif ($button === 'purchase') {
+            $order = $request->except('_token', 'button');
+            $order['user_id'] = $user->id;
             $item = Item::find($request->item_id);
-            $order['item_id'] = $item->id;
 
-            if ($user_id === $item->user_id) {
+            if ($user->id === $item->user_id) {
                 $request->session()->flash('message', 'その商品は購入できません');
             } else {
                 Order::create($order);
@@ -132,9 +122,14 @@ class ItemController extends Controller
                 $request->session()->flash('message', '商品を購入しました');
             }
 
-            // $previousUrl = app('url')->previous();
-            // return redirect()->to($previousUrl . '?' . http_build_query(['id' => $order['item_id']]))->withInput();
-            return redirect()->route('purchase',['item_id',$item->id]);
+            Transaction::create([
+                'item_id' => $item->id,
+                'buyer_id' => $user->id,
+                'seller_id' => $item->user_id,
+                'status' => 1,
+            ]);
+            
+            return redirect()->route('purchase', ['id' => $item->id]);
         }
     }
 

@@ -52,15 +52,24 @@ Route::middleware(['auth'])->group(function(){
     Route::patch('/purchase/address/:item_id', [ItemController::class, 'edit']);
     Route::post('/sell', [ItemController::class, 'create']);
 
-    // 入会テスト追加分
     Route::get('/mypage', [MypageController::class, 'mypage'])->name('mypage');
+    
+
+    // 入会テスト追加分
+
+    // 取引チャット画面へ
     Route::get('/trading_chat', [TradingChatController::class, 'index'])->name('trading.chat');
 
+    // コメント機能
     Route::post('/trading_chat/comment/create',[TransactionCommentController::class,'create'])->name('comment.create');
     Route::post('/trading_chat/comment/edit', [TransactionCommentController::class, 'edit'])->name('comment.edit');
+
+    // 取引完了
     Route::post('/item/transaction/complete',[TradingChatController::class,'complete'])->name('transaction.complete');
+    // 評価
     Route::post('/transaction/review',[TransactionReviewController::class,'create'])->name('transaction.review');
 
+    // ホームにて「購入」ボタン押下したとき
     Route::post('/purchase/transaction',[TransactionController::class,'create'])->name('purchase.transaction');
 });
 

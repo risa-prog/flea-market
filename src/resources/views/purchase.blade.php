@@ -6,13 +6,12 @@
 
 @section('content')
 @if(session('message'))
-    <div class="home__session">
-        {{session('message')}}
-    </div>
+<div class="home__session">
+    {{session('message')}}
+</div>
 @endif
-<form action="/order}}" method="post">
+<form action="/order?item_id={{$item->id}}" method="post">
     @csrf
-    <!-- <input type="hidden" name="item_id" value="{{$item->id}}"> -->
     <div class="purchase-form">
         <div class="purchase-form__item">
             <div class="purchase-form__item-content">
@@ -67,7 +66,7 @@
                         <input type="text" name="post_code" value="{{ $member['post_code']}}" readonly>
                     </div>
                     <div class="purchase-form__shipping-address">
-                        <input  type="text" name="address" value="{{ $member['address'] }}" readonly>
+                        <input type="text" name="address" value="{{ $member['address'] }}" readonly>
                         <input type="text" name="building" value="{{ $member['building'] }}" readonly>
                     </div>
                     @if($errors->has('post_code'))
@@ -101,12 +100,12 @@
     var option1 = document.getElementById('option1');
     var option2 = document.getElementById('option2');
 
-    select.addEventListener('change',function(){
-        if(select.value == '1'){
+    select.addEventListener('change', function() {
+        if (select.value == '1') {
             payment.textContent = option1.textContent;
-        }else{
+        } else {
             payment.textContent = option2.textContent;
-        } 
+        }
     });
 </script>
 @endsection

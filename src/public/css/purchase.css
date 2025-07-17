@@ -52,11 +52,13 @@ img {
 .purchase-form__heading{
     width:60%;
     padding:24px; 
+    white-space: nowrap;
 }
 
 .purchase-form__data {
     width: 40%;
-    padding: 24px; 
+    padding: 24px;
+    white-space: nowrap; 
 }
 
 .purchase-form__order {

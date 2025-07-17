@@ -80,7 +80,7 @@
                     @foreach($comments as $comment)
                     <div class="item__comment-inner">
                         <div class="item__comment-image">
-                            <img class="item__comment-image-inner" src="{{asset('storage/'.optional($comment->user->profile)->profile_image)}}" alt="">
+                            <img class="item__comment-image-inner" src="{{asset('storage/'.optional($comment->user->member)->profile_image)}}" alt="">
                         </div>
                         <p class="item__comment-user">
                             {{$comment->user->member->user_name}}
