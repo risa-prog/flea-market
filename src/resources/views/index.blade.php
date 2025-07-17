@@ -39,7 +39,7 @@
             @if(!$item->transaction)
             <form action="{{ route('purchase.transaction',['item_id' => $item->id]) }}" method="post">
                 @csrf
-                    <button>取引する</button>
+                    <button>購入する</button>
                 </form>
                 @endif
         </div>
