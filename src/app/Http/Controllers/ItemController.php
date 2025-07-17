@@ -69,7 +69,7 @@ class ItemController extends Controller
     }
 
     public function purchase(Request $request){
-        $item = Item::find($request->id);
+        $item = Item::with(['transaction','order'])->find($request->id);
         $user = Auth::user();
         $member = Member::where('user_id',$user->id)->first()->toArray();
 

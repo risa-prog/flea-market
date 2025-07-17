@@ -85,10 +85,10 @@
                 </div>
             </div>
             <div class="purchase-form__button">
-                @if(empty($item->order))
-                <button name="button" value="purchase" class="purchase-form__submit">購入する</button>
+                @if(empty($item->order) && empty($item->transaction))
+                    <button name="button" value="purchase" class="purchase-form__submit">購入する</button>
                 @else
-                <p>Sold</p>
+                    <p>Sold</p>
                 @endif
             </div>
         </div>
