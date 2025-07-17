@@ -3,7 +3,7 @@
 ## 環境構築
 
 **Dockerビルド**</br>
-1,git clone  git@github.com:risa-prog/flea-market.git<br/>
+1,git clone cdcdhttps://github.com/risa-prog/flea-market.git<br/>
 2,docker-compose up -d --build
 
 **Laravel環境構築**</br>
