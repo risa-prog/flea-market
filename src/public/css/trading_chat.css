@@ -1,24 +1,36 @@
+.header {
+    background-color: #000000;
+    z-index: 1001;
+    position: relative;
+}
+
 .trading-chat {
     display: flex;
 }
 
 .trading-chat__side {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 20%;
-    background-color: #868686;
     height: 100vh;
+    background-color: #868686;
     text-align: center;
+    overflow-y: auto;
+    z-index: 1000;
 }
+
+
 
 .trading-chat__side-ttl {
     color: #FFFFFF;
     font-size: 32px;
     font-weight: bold;
-    margin-bottom: 60px;
+    margin-top: 80px;
 }
 
 ul {
     list-style: none;
-    
 }
 
 li {
@@ -26,18 +38,21 @@ li {
     background-color: #EEEFEB;
     width: 80%;
     border-radius: 5px;
+    text-align: center;
 }
 
 .trading-chat__side-link {
     display: inline-block;
     text-decoration: none;
-    padding: 4px 16px;
+    padding: 4px 8px;
     font-weight: bold;
     font-size: 18px;
     width:100%;
+    white-space: nowrap;
 }
 
 .trading-chat__content {
+    margin-left: 20%;
     width: 80%;
 }
 
@@ -71,13 +86,13 @@ li {
 
 .transaction-complete-text {
     color: #FFFFFF;
-        background-color: #FF8181;
-        border: none;
-        border-radius: 16px;
-        padding: 8px;
-        font-size: 16px;
-        white-space: nowrap;
-        margin-right: 20px;
+    background-color: #FF8181;
+    border: none;
+    border-radius: 16px;
+    padding: 8px;
+    font-size: 16px;
+    white-space: nowrap;
+    margin-right: 30px;
 }
 
 .trading-chat__content-item {
@@ -260,7 +275,7 @@ img {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 999;
+    z-index: 1100;
 }
 
 .transaction-modal__content {
@@ -332,7 +347,8 @@ img {
     }
 
     .trading-chat__side-link {
-        font-size: 16px;
+        font-size: 14px;
+        padding: 4px 10px;
     }
 
     .trading-chat__side {
@@ -341,6 +357,7 @@ img {
     
     .trading-chat__content {
         width: 75%;
+        margin-left: 25%;
     }
 
     .trading-chat__ttl-text {

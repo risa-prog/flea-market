@@ -10,11 +10,11 @@
         <h3 class="trading-chat__side-ttl">その他の取引</h3>
         <ul class="trading-chat__side-list">
             @foreach($sortedTransactions as $sortedTransaction)
-            <li>
-                <a href="/trading_chat?item_id={{$sortedTransaction->item->id}}" class="trading-chat__side-link">
+                    <li>
+                        <a href="/trading_chat?item_id={{$sortedTransaction->item->id}}" class="trading-chat__side-link">
                     {{$sortedTransaction->item->item_name}}
-                </a>
-            </li>
+                        </a>
+                    </li>
             @endforeach
         </ul>
     </div>

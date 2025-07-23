@@ -36,12 +36,6 @@
             @if($item->order != null)
             <label>Sold</label>
             @endif
-            @if(!$item->transaction)
-            <form action="{{ route('purchase.transaction',['item_id' => $item->id]) }}" method="post">
-                @csrf
-                    <button>購入する</button>
-                </form>
-                @endif
         </div>
         @endforeach
         @endif

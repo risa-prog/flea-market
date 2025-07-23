@@ -17,14 +17,22 @@ class TradingChatController extends Controller
         $item = Item::with('transaction.transactionComments')->find($request->item_id);
         $user = Auth::user();
 
-        // ユーザーが取引のある商品を全て取得
+        // ユーザーが取引のある商品を全て取得(未レビューありのもの)
         $transactions = Transaction::with('item')->where(function ($query) use ($user){
             $query->where('seller_id', $user->id)
                 ->orWhere('buyer_id', $user->id);
         })
+            ->where(function ($query) {
+                $query->whereDoesntHave('transactionReviews', function ($q) {
+                    $q->whereColumn('reviewer_id', 'buyer_id');
+                })
+                    ->orWhereDoesntHave('transactionReviews', function ($q) {
+                        $q->whereColumn('reviewer_id', 'seller_id');
+                    });
+            })
         ->get();
 
-        // ユーザーが取引のある商品のうち、新着メッセージが来た順にソート
+        // ユーザーが取引のある商品(未レビューありのもの)のうち、新着メッセージが来た順にソート
         $sortedTransactions = $transactions->sortByDesc(
             function ($transaction) use ($user) {
                 // receiver_id が自分と一致するコメントの中で、最新の created_at を取得

@@ -34,12 +34,20 @@ class MypageController extends Controller
                 })
                 ->get();
             }elseif($request->tab === "transaction"){
-            $transactions = Transaction::with(['item', 'transactionComments'])
+            $transactions = Transaction::with(['item', 'transactionComments','transactionReviews'])
                 ->where(function ($query) use ($user) {
                     $query->where('seller_id', $user->id)
                         ->orWhere('buyer_id', $user->id);
                 })
-                ->get();
+                ->where(function ($query) {
+                    $query->whereDoesntHave('transactionReviews', function ($q) {
+                        $q->whereColumn('reviewer_id', 'buyer_id');
+                    })
+                        ->orWhereDoesntHave('transactionReviews', function ($q) {
+                            $q->whereColumn('reviewer_id', 'seller_id');
+                        });
+                })
+            ->get();
 
             // 新着メッセージ順に並べたアイテムのコレクションを作成
             $items = $transactions->sortByDesc(function ($transaction) use ($user) {
