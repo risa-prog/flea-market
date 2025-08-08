@@ -81,7 +81,6 @@ class MypageController extends Controller
         }else {
             $averageRating = null;
         }
-
         
         return view('mypage',compact('member','items','unreadCount','averageRating'));
     }

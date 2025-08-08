@@ -1,18 +1,18 @@
 @extends('layouts.app')
 
 @section('css')
-    <link rel="stylesheet" href="{{asset('css/sell.css')}}">
+<link rel="stylesheet" href="{{asset('css/sell.css')}}">
 @endsection
 
 @section('content')
 @if(session('message'))
-    <div class="sell__session">
-        <p>{{session('message')}}</p>
-    </div>
+<div class="sell__session">
+    <p id="message">{{session('message')}}</p>
+</div>
 @endif
 <div class="sell-form">
     <form action="/sell" method="post" enctype="multipart/form-data">
-    @csrf
+        @csrf
         <div class="sell-form__ttl">
             <h2>商品の出品</h2>
         </div>
@@ -35,10 +35,10 @@
                     @foreach($categories as $category)
                     <div class="sell-form__category-item">
                         <label class="sell-form__label" for="{{$category->id}}">
-                            <input class="sell-form__category-input" type="checkbox" name="category_id[]" value="{{$category->id}}" id="{{$category->id}}" @if((int)old('category_id[]') == $category->id )checked @endif><span class="sell-form__span">{{$category->content}}</span>
+                            <input class="sell-form__category-input" type="checkbox" name="category_id[]" value="{{$category->id}}" id="{{$category->id}}" @if((int)old('category_id[]')==$category->id )checked @endif><span class="sell-form__span">{{$category->content}}</span>
                         </label>
                     </div>
-                     @endforeach
+                    @endforeach
                 </div>
                 @error('category_id')
                 <div class="sell-form__error">
@@ -49,12 +49,12 @@
             <div class="sell-form__condition">
                 <label class="sell-form__label">商品の状態</label>
                 <div class="sell-form__select-item">
-                    <select class="sell-form__select" name="condition" >
+                    <select class="sell-form__select" name="condition">
                         <option value="" disabled selected>選択してください</option>
-                        <option value="1" @if((int)old('condition')== "1") selected @endif>良好</option> 
-                        <option value="2" @if((int)old('condition')== "2") selected @endif>目立った傷や汚れなし</option>
-                        <option value="3" @if((int)old('condition')== "3") selected @endif>やや傷や汚れあり</option>
-                        <option value="4" @if((int)old('condition')== "4") selected @endif>状態が悪い</option>
+                        <option value="1" @if((int)old('condition')=="1" ) selected @endif>良好</option>
+                        <option value="2" @if((int)old('condition')=="2" ) selected @endif>目立った傷や汚れなし</option>
+                        <option value="3" @if((int)old('condition')=="3" ) selected @endif>やや傷や汚れあり</option>
+                        <option value="4" @if((int)old('condition')=="4" ) selected @endif>状態が悪い</option>
                     </select>
                 </div>
                 @error('condition')
@@ -111,6 +111,18 @@
         </div>
 
     </form>
-    
 </div>
+<script>
+    const message = document.getElementById('message');
+    setTimeout(() => {
+        message.style.display = 'none';
+    }, 5000);
+
+    if (message.textContent === '商品を出品しました') {
+        message.style.color = '#155724';
+        message.style.backgroundColor = '#d4edda';
+        message.style.padding = '10px';
+        message.style.borderRadius = '4px';
+    }
+</script>
 @endsection

@@ -16,7 +16,7 @@
                 @if(!is_null($averageRating))
                 <div class="mypage__user-review">
                     @for ($i = 1; $i <= 5; $i++)
-                        @if ($i <=floor($averageRating))
+                        @if ($i <= $averageRating)
                         <span style="color: gold;" class="mypage__user-review-star">★</span>
                         @else
                         <span style="color: lightgray;" class="mypage__user-review-star">★</span>

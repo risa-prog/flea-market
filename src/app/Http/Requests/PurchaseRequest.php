@@ -37,7 +37,14 @@ class PurchaseRequest extends FormRequest
             'post_code.required'=>'配送先を入力してください',
             'address.required'=>'配送先を入力してください',
             'building.required'=>'配送先を入力してください'
-        ];
-        
+        ];   
+    }
+
+    protected function getRedirectUrl()
+    {
+        // 左がnullなら右使う
+        $itemId = $this->route('item_id') ?? $this->input('item_id');
+
+        return url('/purchase') . '?id=' . $itemId;
     }
 }

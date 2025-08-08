@@ -32,9 +32,9 @@ class ItemController extends Controller
 
     public function index(Request $request) {
         if(empty($request->tab)) {
-            $items=Item::where('user_id','!=',Auth::id())->get();
+            $items=Item::with(['order', 'transaction'])->where('user_id','!=',Auth::id())->get();
          }elseif($request->tab === "mylist"){
-             $items=Item::with('likes')->whereHas('likes',function ($query) {
+             $items=Item::with(['likes', 'order', 'transaction'])->whereHas('likes',function ($query) {
                  $query->where('user_id',Auth::id());
              })->get();
          }elseif($request->tab === "recommendation"){
@@ -50,7 +50,7 @@ class ItemController extends Controller
     }
 
     public function item(Request $request){
-        $item_id=$request->id;
+        $item_id=$request->item_id;
         $item=Item::find($item_id);
         
         $item['category_id']=explode(',',$item['category_id']);
@@ -79,6 +79,14 @@ class ItemController extends Controller
 
     public function comment(CommentRequest $request){
         $user = Auth::user();
+        $item_id = $request->item_id;
+        $item = Item::find($item_id);
+
+        if($user->id === $item->user_id) {
+            $request->session()->flash('message', '自分の出品した商品にはコメントできません');
+            return redirect()->route('item', ['item_id' => $item_id]);
+        }
+
         $member = Member::where('user_id',$user->id)->first();
         
         $profile = $member->profile_image;
@@ -91,6 +99,13 @@ class ItemController extends Controller
         return redirect()->to($previousUrl.'?'. http_build_query(['id'=>$comment['item_id']]))->withInput();      
     }
     
+    // バリデーションに引っかかったとき用のルーティング(バリデーションに引っかかると、元の入力formのURLにgetでリダイレクトするので)
+    public function showAddressForm() {
+        // セッションから値を取得
+        $item_id = session('item_id');
+        $member = session('member');
+        return view('address', compact('item_id', 'member'));
+    }
     
     public function edit(Shipping_AddressRequest $request) {
         $member = $request->only(['post_code','address','building']);
@@ -99,28 +114,19 @@ class ItemController extends Controller
         return view('purchase',compact('member','item'));
     }
 
-    public function order(PurchaseRequest $request)
-    {
-        $button = $request->input('button');
+    public function order(PurchaseRequest $request) {
         $user = Auth::user();
+        $order = $request->except('_token');
+        $order['user_id'] = $user->id;
+        $item = Item::find($request->item_id);
 
-        if ($button === 'address') {
-            $item_id = $request->item_id;
-            $member = Member::with('user')->first();
+        // 自分の出品した商品を買おうとした時
+        if ($user->id === $item->user_id) {
+            $request->session()->flash('message', 'その商品は購入できません');
+        } else {
+            Order::create($order);
 
-            return view('address', compact('member', 'item_id'));
-        } elseif ($button === 'purchase') {
-            $order = $request->except('_token', 'button');
-            $order['user_id'] = $user->id;
-            $item = Item::find($request->item_id);
-
-            if ($user->id === $item->user_id) {
-                $request->session()->flash('message', 'その商品は購入できません');
-            } else {
-                Order::create($order);
-
-                $request->session()->flash('message', '商品を購入しました');
-            }
+            $request->session()->flash('message', '商品を購入しました');
 
             Transaction::create([
                 'item_id' => $item->id,
@@ -128,9 +134,9 @@ class ItemController extends Controller
                 'seller_id' => $item->user_id,
                 'status' => 1,
             ]);
-            
-            return redirect()->route('purchase', ['id' => $item->id]);
         }
+
+        return redirect()->route('purchase', ['id' => $item->id]);
     }
 
     public function create(ExhibitionRequest $request){
@@ -151,5 +157,19 @@ class ItemController extends Controller
         
         $request->session()->flash('message','商品を出品しました');
         return redirect('/sell');
+    }
+
+    public function address(Request $request) {
+        // セッションに保存(addressページのformにてバリデーションに引っかかった時に、これらの値がいるので)
+        session([
+            'item_id' => $request->input('item_id'),
+            'member' => [
+                'post_code' => $request->input('post_code2'),
+                'address' => $request->input('address2'),
+                'building' => $request->input('building2'),
+            ]
+        ]);
+
+        return redirect()->route('address.form');
     }
 }

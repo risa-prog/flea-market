@@ -9,7 +9,7 @@
 <div class="home">
     @if (session('success'))
     <div class="alert-success">
-        <p class="session-message">{{ session('success') }}</p>
+        <p class="session-message" id="message">{{ session('success') }}</p>
     </div>
     @endif
     <div class="home__links">
@@ -25,15 +25,15 @@
         @foreach($items as $item)
         <div class="home__item-content">
             <div class="home__item-image">
-                <a href="/item/:item_id?id={{$item->id}}">
+                <a href="/item?item_id={{$item->id}}">
                     <img src="{{asset('storage/'.$item->item_image)}}" alt="">
                     <img src="{{$item->item_image}}" alt="">
                 </a>
             </div>
             <div class="home__item-link">
-                <a href="/item/:item_id?id={{$item->id}}" class="home__item-link-transition">{{$item->item_name}}</a>
+                <a href="/item?item_id={{$item->id}}" class="home__item-link-transition">{{$item->item_name}}</a>
             </div>
-            @if($item->order != null)
+            @if($item->order != null || $item->transaction != null)
             <label>Sold</label>
             @endif
         </div>
@@ -41,4 +41,10 @@
         @endif
     </div>
 </div>
+<script>
+    const message = document.getElementById('message');
+    setTimeout(() => {
+        message.style.display = 'none';
+    }, 5000);
+</script>
 @endsection

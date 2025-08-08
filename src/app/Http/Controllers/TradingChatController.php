@@ -68,7 +68,7 @@ class TradingChatController extends Controller
         }
 
         $hasReviewed = TransactionReview::where('transaction_id', $transaction->id)
-            ->where('reviewer_id', Auth::id())
+            ->where('reviewer_id',Auth::id())
             ->exists();
 
         return view('trading_chat',compact('item', 'sortedTransactions','client', 'my_transaction_comments','hasReviewed'));

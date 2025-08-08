@@ -5,10 +5,15 @@
 @endsection
 
 @section('content')
+@if(session('message'))
+<div class="home__session">
+    <p id="message">{{session('message')}}</p>
+</div>
+@endif
 <div class="item">
     <div class="item__image">
         <img class="item__image-inner" src="{{$item->item_image}}" alt="">
-         <img class="item__image-inner" src="{{asset('storage/'.$item->item_image)}}" alt="">
+        <img class="item__image-inner" src="{{asset('storage/'.$item->item_image)}}" alt="">
     </div>
     <div class="item__content">
         <div class="item__content-detail">
@@ -34,7 +39,7 @@
                 </div>
             </div>
             <div class="item__content-button">
-                    <a href="/purchase/:item_id?id={{$item->id}}" class="item__content-submit">購入手続きへ</a>
+                <a href="/purchase?id={{$item->id}}" class="item__content-submit">購入手続きへ</a>
             </div>
         </div>
         <div class="item__description">
@@ -49,24 +54,24 @@
                         <th class="item__table-heading">カテゴリー</th>
                         <td class="item__table-data">
                             <div class="item__table-wrap">
-                            @foreach($categories as $category)
+                                @foreach($categories as $category)
                                 <span class="item__table-span">{{$category->content}}</span>
-                            @endforeach
+                                @endforeach
                             </div>
-                        </td> 
-                        
+                        </td>
+
                     </tr>
                     <tr class="item__table-row">
                         <th class="item__table-heading">商品の状態</th>
                         <td class="item__table-data">
                             @if($item->condition==1)
-                                良好
+                            良好
                             @elseif($item->condition==2)
-                                目立った傷や汚れなし
+                            目立った傷や汚れなし
                             @elseif($item->condition==3)
-                                やや傷や汚れあり
+                            やや傷や汚れあり
                             @else
-                                状態が悪い
+                            状態が悪い
                             @endif
                         </td>
                     </tr>
@@ -75,24 +80,24 @@
         </div>
         <div class="item__comment">
             <div class="item__comment-content">
-                    <h3 class="item__comment-heading">コメント({{$item->comments->count()}})</h3>
-                    @if($comments != null)
-                    @foreach($comments as $comment)
-                    <div class="item__comment-inner">
-                        <div class="item__comment-image">
-                            <img class="item__comment-image-inner" src="{{asset('storage/'.optional($comment->user->member)->profile_image)}}" alt="">
-                        </div>
-                        <p class="item__comment-user">
-                            {{$comment->user->member->user_name}}
-                        </p>
+                <h3 class="item__comment-heading">コメント({{$item->comments->count()}})</h3>
+                @if($comments != null)
+                @foreach($comments as $comment)
+                <div class="item__comment-inner">
+                    <div class="item__comment-image">
+                        <img class="item__comment-image-inner" src="{{asset('storage/'.optional($comment->user->member)->profile_image)}}" alt="">
                     </div>
-                    <p class="item__comment-text">{{$comment->content}}</p>
-                    @endforeach
-                    @endif
+                    <p class="item__comment-user">
+                        {{$comment->user->member->user_name}}
+                    </p>
+                </div>
+                <p class="item__comment-text">{{$comment->content}}</p>
+                @endforeach
+                @endif
             </div>
             <div class="comment-form">
                 <form action="/item_comment" method="post">
-                @csrf
+                    @csrf
                     <p class="comment-form__text">商品へのコメント</p>
                     <div class="comment-form__content">
                         <textarea class="comment-form__textarea" name="content">{{old('content')}}</textarea>
@@ -103,7 +108,7 @@
                             {{$message}}
                         </p>
                     </div>
-                     @enderror
+                    @enderror
                     <div class="comment-form__button">
                         <input type="hidden" name="item_id" value="{{$item->id}}">
                         <input type="hidden" name="user_id" value="{{Auth::id()}}">
@@ -117,15 +122,23 @@
 </div>
 <script>
     var like = document.querySelector('.item_like');
-    // console.log(like);
-    // var unlike = document.querySelector('.item_unlike');
     var thumbs = document.querySelector('.fa-thumbs-up');
-    // console.log(thumbs);
-    if(like != null){
-        like.addEventListener('click',function(){
-        thumbs.style.color = 'red';
+    if (like != null) {
+        like.addEventListener('click', function() {
+            thumbs.style.color = 'red';
         });
+    }
+
+    const message = document.getElementById('message');
+    setTimeout(() => {
+        message.style.display = 'none';
+    }, 5000);
+
+    if (message.textContent === '自分の出品した商品にはコメントできません') {
+        message.style.color = '#721c24';
+        message.style.backgroundColor = '#f8d7da';
+        message.style.padding = '10px';
+        message.style.borderRadius = '4px';
     }
 </script>
 @endsection
-

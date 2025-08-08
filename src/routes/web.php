@@ -35,10 +35,10 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::get('/', [ItemController::class, 'index']);
-Route::get('/item/:item_id', [ItemController::class, 'item']);
+Route::get('/item', [ItemController::class, 'item'])->name('item');
 
 Route::middleware(['auth'])->group(function(){
-    Route::get('/purchase/:item_id',[ItemController::class,'purchase'])->name('purchase');
+    Route::get('/purchase',[ItemController::class,'purchase'])->name('purchase');
     
     Route::get('/sell',[ItemController::class,'sell']);
     Route::post('/item_comment',[ItemController::class,'comment']);
@@ -48,12 +48,14 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/item/:item/unlike',[LikeController::class,'unlike']);
     Route::post('/mypage/profile', [MypageController::class, 'set']);
 
-    Route::post('/order', [ItemController::class, 'order']);
-    Route::patch('/purchase/address/:item_id', [ItemController::class, 'edit']);
+    Route::post('/order', [ItemController::class, 'order'])->name('order');
+    Route::get('/purchase/address/edit',[ItemController::class,'showAddressForm'])->name('address.form');
+    Route::patch('/purchase/address/edit', [ItemController::class, 'edit'])->name('edit');
     Route::post('/sell', [ItemController::class, 'create']);
 
     Route::get('/mypage', [MypageController::class, 'mypage'])->name('mypage');
-    
+
+    Route::post('/purchase/address',[ItemController::class,'address'])->name('address');
 
     // 入会テスト追加分
 

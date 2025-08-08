@@ -1,89 +1,89 @@
-.purchase-form {
-    width:80%;
-    margin:50px auto;
+.purchase {
+    width: 80%;
+    margin: 50px auto;
 }
 
-.purchase-form__item {
+.purchase-content {
     display: grid;
-    grid-template-columns:2fr 1fr ;
+    grid-template-columns: 2fr 1fr;
     align-items: center;
 }
 
-.purchase-form__item-ttl {
-    font-size:24px;
-}
-
-.purchase-form__item-price {
-    font-size:20px;
-}
-
-.purchase-form__item-content {
+.item-content {
     grid-column: 1;
     display: flex;
-    margin-bottom: 20px; 
+    margin-bottom: 20px;
     border-bottom: 1px solid #606060;
     width: 80%;
 }
 
-.purchase-form__item-image {
-    width: 30%;
+.item-image {
+    width: 40%;
+    margin-right: 24px;
 }
 
 img {
     width: 100%;
 }
 
-.purchase-form__item-inner {
-    padding-left: 24px;
+.item-name {
+    font-weight: bold;
+    font-size: 24px;
 }
 
-.purchase-form__table {
+.item_price {
+    font-size: 20px;
+}
+
+.purchase__payment-detail {
     grid-column: 2;
 }
 
-.purchase-form__table-inner {
+.purchase-table {
     width: 100%;
 }
 
-.purchase-form__row {
-    border: 1px solid #606060;  
+.purchase-table__row {
+    border: 1px solid #606060;
 }
 
-.purchase-form__heading{
-    width:60%;
-    padding:24px; 
+.purchase-table__heading {
+    width: 60%;
+    padding: 24px;
     white-space: nowrap;
 }
 
-.purchase-form__data {
+.purchase-table__data {
     width: 40%;
     padding: 24px;
-    white-space: nowrap; 
+    white-space: nowrap;
 }
 
-.purchase-form__order {
+.purchase-form {
     display: grid;
     grid-template-columns: 2fr 1fr;
+    align-items: center;
 }
 
-.purchase-form__order-group {
-    border-bottom: 1px solid #606060;
-    padding-bottom: 20px;
-}
-
-.purchase-form__order-content {
+.purchase-form__content {
     grid-column: 1;
-    width:80%;
+    border-bottom: 1px solid #606060;
+    width: 80%;
+    padding: 16px;
 }
 
-.purchase-form__order-label {
-    font-size:18px;
-    margin-bottom: 8px;
-    display: inline-block;
+.purchase-form__label {
+    display: block;
+    font-weight: 200;
+    font-size: 20px;
+    margin-bottom: 16px;
 }
 
-.purchase-form__order-selectbox {
+.purchase-form__selectbox {
     padding: 3px;
+    width: 40%;
+    margin-left: 24px;
+    margin-bottom: 32px;
 }
 
 .purchase-form__button {
@@ -93,61 +93,86 @@ img {
 .purchase-form__submit {
     border: none;
     background-color: #FF5455;
-    color:#fff;
+    color: #fff;
     width: 100%;
     padding: 8px;
     cursor: pointer;
-   border-radius: 3px;
+    border-radius: 3px;
+    font-size: 16px;
 }
 
-.purchase-form__shipping {
-    padding-top: 20px;
+.purchase-form__error-message {
+    color: red;
 }
 
-.purchase-form__shipping-flex {
+.shipping-address {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+
+.shipping-address__form {
+    grid-column: 1;
+    width: 80%;
+    padding: 16px;
+}
+
+.shipping-address__flex {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
-.purchase-form__link a {
-    text-decoration: none;
+.shipping-address__text {
+    font-weight: 200;
+    font-size: 20px;
+    margin-bottom: 16px;
 }
 
-.purchase-form__shipping-label {
-    font-size:18px;
-    margin-bottom: 8px;
+.shipping-address__button {
+    border: none;
+    background-color: transparent;
+    color: #0273CB;
+    font-size: 18px;
 }
 
-.purchase-form__shipping-address:last-child {
+.shipping-address__form-input {
+    border: none;
+    font-size: 16px;
+    padding: 3px;
+}
+
+.shipping-address__post-code {
+    margin-left: 24px;
+}
+
+.shipping-address__address {
     display: flex;
+    margin-left: 24px;
 }
-
-.purchase-form__shipping-address input {
-    border:none; 
-    font-size:16px;
-}
-
 
 @media screen and (max-width: 1200px) {
-    .purchase-form__item-ttl {
-            font-size: 20px;
-        }
-
-    .purchase-form__item-price {
-        font-size: 18px;
+    .item-name {
+        font-size: 20px;
     }
 
-    .purchase-form__heading,
-        .purchase-form__data {
-            padding: 5px;
-        }
-}
+    .purchase-table__heading,
+    .purchase-table__data {
+        padding: 16px;
+    }
 
+    .purchase-form__label {
+        font-size: 16px;
+    }
 
+    .shipping-address__text {
+        font-size: 16px;
+    }
 
+    .shipping-address__button {
+        font-size: 15px;
+    }
 
-
-
-.purchase-form__error-message{
-    color:red;
+    .purchase-form__selectbox {
+        width: 60%;
+    }
 }

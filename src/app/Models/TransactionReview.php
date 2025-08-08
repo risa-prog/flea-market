@@ -10,4 +10,8 @@ class TransactionReview extends Model
     use HasFactory;
 
     protected $fillable = ['transaction_id','reviewer_id','reviewee_id','rating'];
+
+    public function transaction() {
+        return $this->belongsTo('App\Models\Transaction');
+    }
 }
