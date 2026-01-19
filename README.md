@@ -32,7 +32,7 @@
 
 ![](./flea-market.drawio.png)</br>
 </br></br>
-(今回追加分)</br>
+(追加)</br>
 ![](./flea-market2.drawio.png)
 
 ## メールの受信確認について
